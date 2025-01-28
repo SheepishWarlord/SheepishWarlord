@@ -24,7 +24,18 @@ VerdanturfTown_Mart_Pokemart:
 	.2byte ITEM_REPEL
 	.2byte ITEM_X_SP_ATK
 	.2byte ITEM_FLUFFY_TAIL
-	pokemartlistend
+	.2byte ITEM_LIGHT_CLAY
+	.2byte ITEM_ROOM_SERVICE
+	.2byte ITEM_QUICK_POWDER
+	.2byte ITEM_METAL_POWDER
+	.2byte ITEM_LIGHT_BALL
+	.2byte ITEM_THICK_CLUB
+	.2byte ITEM_LEEK
+	.2byte ITEM_METRONOME
+	.2byte ITEM_QUICK_CLAW
+	.2byte ITEM_NONE
+	release
+	end
 
 VerdanturfTown_Mart_EventScript_Boy::
 	msgbox VerdanturfTown_Mart_Text_XSpecialIsCrucial, MSGBOX_NPC

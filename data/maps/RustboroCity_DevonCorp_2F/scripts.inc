@@ -1,3 +1,52 @@
+RustboroCity_DevonCorp_2F_Zygarde10Gift::
+	lock
+	faceplayer
+	goto_if_set FLAG_BADGE03_GET, RustboroCity_DevonCorp_2F_Zygarde10Gift_6
+RustboroCity_DevonCorp_2F_Zygarde10Gift_5:
+	goto_if_set FLAG_ZYGARDE10_GIFT, RustboroCity_DevonCorp_2F_Zygarde10Gift_3
+	msgbox RustboroCity_DevonCorp_2F_Zygarde10Gift_Text_5
+RustboroCity_DevonCorp_2F_Zygarde10Gift_1:
+	waitmessage
+	release
+	end
+
+RustboroCity_DevonCorp_2F_Zygarde10Gift_2:
+	msgbox RustboroCity_DevonCorp_2F_Zygarde10Gift_Text_0, MSGBOX_YESNO
+	compare VAR_RESULT, YES
+	goto_if_eq RustboroCity_DevonCorp_2F_Zygarde10Gift_9
+	msgbox RustboroCity_DevonCorp_2F_Zygarde10Gift_Text_3
+	goto RustboroCity_DevonCorp_2F_Zygarde10Gift_1
+
+RustboroCity_DevonCorp_2F_Zygarde10Gift_3:
+	msgbox RustboroCity_DevonCorp_2F_Zygarde10Gift_Text_4
+	goto RustboroCity_DevonCorp_2F_Zygarde10Gift_1
+
+RustboroCity_DevonCorp_2F_Zygarde10Gift_6:
+	goto_if_unset FLAG_ZYGARDE10_GIFT, RustboroCity_DevonCorp_2F_Zygarde10Gift_2
+	goto RustboroCity_DevonCorp_2F_Zygarde10Gift_5
+
+RustboroCity_DevonCorp_2F_Zygarde10Gift_9:
+	givemon SPECIES_ZYGARDE_10, 36, item = ITEM_ABILITY_CAPSULE
+	compare VAR_RESULT, MON_GIVEN_TO_PARTY
+	goto_if_eq RustboroCity_DevonCorp_2F_Zygarde10Gift_12
+	compare VAR_RESULT, MON_GIVEN_TO_PC
+	goto_if_eq RustboroCity_DevonCorp_2F_Zygarde10Gift_13
+	msgbox RustboroCity_DevonCorp_2F_Zygarde10Gift_Text_2
+	goto RustboroCity_DevonCorp_2F_Zygarde10Gift_1
+
+RustboroCity_DevonCorp_2F_Zygarde10Gift_12:
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox RustboroCity_DevonCorp_2F_Zygarde10Gift_Text_1
+	setflag FLAG_ZYGARDE10_GIFT
+	goto RustboroCity_DevonCorp_2F_Zygarde10Gift_1
+
+RustboroCity_DevonCorp_2F_Zygarde10Gift_13:
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox RustboroCity_DevonCorp_2F_Zygarde10Gift_Text_1
+	setflag FLAG_ZYGARDE10_GIFT
+	goto RustboroCity_DevonCorp_2F_Zygarde10Gift_1
+
+
 .set LOCALID_FOSSIL_SCIENTIST, 5
 
 RustboroCity_DevonCorp_2F_MapScripts::
@@ -144,7 +193,7 @@ RustboroCity_DevonCorp_2F_EventScript_AnorithReady::
 	end
 
 RustboroCity_DevonCorp_2F_EventScript_ReceiveLileep::
-	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_LILEEP
+	setvar VAR_TEMP_1, SPECIES_LILEEP
 	givemon SPECIES_LILEEP, 20
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PARTY, RustboroCity_DevonCorp_2F_EventScript_ReceiveLileepParty
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PC, RustboroCity_DevonCorp_2F_EventScript_ReceiveLileepPC
@@ -189,7 +238,7 @@ RustboroCity_DevonCorp_2F_EventScript_FinishReceivingLileep::
 	end
 
 RustboroCity_DevonCorp_2F_EventScript_ReceiveAnorith::
-	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_ANORITH
+	setvar VAR_TEMP_1, SPECIES_ANORITH
 	givemon SPECIES_ANORITH, 20
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PARTY, RustboroCity_DevonCorp_2F_EventScript_ReceiveAnorithParty
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PC, RustboroCity_DevonCorp_2F_EventScript_ReceiveAnorithPC
@@ -382,3 +431,30 @@ RustboroCity_DevonCorp_2F_Text_WhatToWorkOnNext:
 	.string "One couldn't ask for a better\n"
 	.string "environment as an engineer.$"
 
+RustboroCity_DevonCorp_2F_Zygarde10Gift_Text_0:
+	.string "Wow, you have Wattson's badge, you must\n"
+	.string "be a strong trainer! I have an\l"
+	.string "experimental POKéMON just for strong\l"
+	.string "trainers! If you would take it with you,\l"
+	.string "we could get some really good data!\l"
+	.string "What do you say?$"
+
+RustboroCity_DevonCorp_2F_Zygarde10Gift_Text_1:
+	.string "Received Zygarde$"
+
+RustboroCity_DevonCorp_2F_Zygarde10Gift_Text_2:
+	.string "There's no room!$"
+
+RustboroCity_DevonCorp_2F_Zygarde10Gift_Text_3:
+	.string "Awww. But think of the data! The data!$"
+
+RustboroCity_DevonCorp_2F_Zygarde10Gift_Text_4:
+	.string "Thank you, hopefully now we can get\n"
+	.string "some really valuable battle data!$"
+
+RustboroCity_DevonCorp_2F_Zygarde10Gift_Text_5:
+	.string "I have a gift for strong trainers. Only\n"
+	.string "strong trainers can beat Wattson! Do\l"
+	.string "you have Wattson's badge? Oh you\l"
+	.string "don't? Guess you're not a strong\l"
+	.string "enough trainer for my gift.0$"

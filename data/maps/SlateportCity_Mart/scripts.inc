@@ -22,7 +22,15 @@ SlateportCity_Mart_Pokemart:
 	.2byte ITEM_ESCAPE_ROPE
 	.2byte ITEM_REPEL
 	.2byte ITEM_HARBOR_MAIL
-	pokemartlistend
+	.2byte ITEM_LUCKY_EGG
+	.2byte ITEM_AIR_BALLOON
+	.2byte ITEM_AMULET_COIN
+	.2byte ITEM_EXP_SHARE
+	.2byte ITEM_FOCUS_BAND
+	.2byte ITEM_FOCUS_SASH
+	.2byte ITEM_NONE
+	release
+	end
 
 SlateportCity_Mart_EventScript_BlackBelt::
 	msgbox SlateportCity_Mart_Text_SomeItemsOnlyAtMart, MSGBOX_NPC

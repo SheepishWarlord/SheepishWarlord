@@ -1,3 +1,37 @@
+Route119_EventScript_Phil::
+	lock
+	msgbox Route119_EventScript_Phil_Text_0, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq Route119_EventScript_Phil_2
+	trainerbattle_single TRAINER_PHIL, Route119_EventScript_Phil_Text_1, Route119_EventScript_Phil_Text_2, PidgeotiteGift
+Route119_EventScript_Phil_1:
+	msgbox Route119_EventScript_Phil_Text_3
+	release
+	end
+
+Route119_EventScript_Phil_2:
+	applymovement OBJ_EVENT_ID_PLAYER, WalkDown2
+	goto Route119_EventScript_Phil_1
+
+
+PidgeotiteGift::
+	msgbox PidgeotiteGift_Text_0
+	giveitem ITEM_PIDGEOTITE
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox PidgeotiteGift_Text_1
+	waitmessage
+	waitfanfare
+	msgbox PidgeotiteGift_Text_2
+	waitmessage
+	release
+	end
+
+
+WalkDown2:
+	walk_down
+	walk_down
+	step_end
+
 .set LOCALID_RIVAL, 16
 .set LOCALID_RIVAL_ON_BIKE, 25
 .set LOCALID_SCOTT, 43
@@ -132,8 +166,8 @@ Route119_EventScript_DefeatedBrendan::
 	end
 
 Route119_EventScript_GiveFlyHM::
-	giveitem ITEM_HM_FLY
-	setflag FLAG_RECEIVED_HM_FLY
+	giveitem ITEM_HM02
+	setflag FLAG_RECEIVED_HM02
 	return
 
 Route119_EventScript_RivalExitScottArrive::
@@ -398,10 +432,7 @@ Route119_EventScript_Hugh::
 	msgbox Route119_Text_HughPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route119_EventScript_Phil::
-	trainerbattle_single TRAINER_PHIL, Route119_Text_PhilIntro, Route119_Text_PhilDefeat
-	msgbox Route119_Text_PhilPostBattle, MSGBOX_AUTOCLOSE
-	end
+
 
 Route119_EventScript_Yasu::
 	trainerbattle_single TRAINER_YASU, Route119_Text_YasuIntro, Route119_Text_YasuDefeat
@@ -612,3 +643,29 @@ Route119_Text_TrainerTipsDecoration:
 	.string "Pick your favorite items and create\n"
 	.string "your very own SECRET BASE exactly the\l"
 	.string "way you want.$"
+
+Route119_EventScript_Phil_Text_0:
+	.string "You look like a strong trainer. I am a\n"
+	.string "strong trainer. I guard the Pidgeotite,\l"
+	.string "do you wish to gain access to Mega\l"
+	.string "Pidgeot?$"
+
+Route119_EventScript_Phil_Text_1:
+	.string "Best of luck in this endeavor!$"
+
+Route119_EventScript_Phil_Text_2:
+	.string "Congratulations! You can now wield Mega\n"
+	.string "Pidgeot!$"
+
+Route119_EventScript_Phil_Text_3:
+	.string "Good job!$"
+
+PidgeotiteGift_Text_0:
+	.string "Here is the Pidgeotite, as promised.$"
+
+PidgeotiteGift_Text_1:
+	.string "{PLAYER} obtained the Pidgeotite!$"
+
+PidgeotiteGift_Text_2:
+	.string "I hope your Pidgeot enjoys the power of\n"
+	.string "Mega Evolution!$"

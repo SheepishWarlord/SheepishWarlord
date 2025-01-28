@@ -1,3 +1,42 @@
+SlateportGiftMon::
+	lockall
+	faceplayer
+	goto_if_unset FLAG_SLATEPORT_GIFT, SlateportGiftMon_2
+	msgbox SlateportGiftMon_Text_4
+SlateportGiftMon_1:
+	waitmessage
+	releaseall
+	end
+
+SlateportGiftMon_2:
+	msgbox SlateportGiftMon_Text_0, MSGBOX_YESNO
+	compare VAR_RESULT, YES
+	goto_if_eq SlateportGiftMon_5
+	msgbox SlateportGiftMon_Text_3
+	goto SlateportGiftMon_1
+
+SlateportGiftMon_5:
+	givemon SPECIES_KLINK, 10, item = ITEM_METAL_COAT
+	compare VAR_RESULT, MON_GIVEN_TO_PARTY
+	goto_if_eq SlateportGiftMon_8
+	compare VAR_RESULT, MON_GIVEN_TO_PC
+	goto_if_eq SlateportGiftMon_9
+	msgbox SlateportGiftMon_Text_2
+	goto SlateportGiftMon_1
+
+SlateportGiftMon_8:
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox SlateportGiftMon_Text_1
+	setflag FLAG_SLATEPORT_GIFT
+	goto SlateportGiftMon_1
+
+SlateportGiftMon_9:
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox SlateportGiftMon_Text_1
+	setflag FLAG_SLATEPORT_GIFT
+	goto SlateportGiftMon_1
+
+
 .set LOCALID_FAT_MAN, 1
 .set LOCALID_MAN_1, 2
 .set LOCALID_RICH_BOY, 3
@@ -154,7 +193,16 @@ SlateportCity_Pokemart_EnergyGuru:
 	.2byte ITEM_ZINC
 	.2byte ITEM_CALCIUM
 	.2byte ITEM_HP_UP
-	pokemartlistend
+	.2byte ITEM_POMEG_BERRY
+	.2byte ITEM_KELPSY_BERRY
+	.2byte ITEM_QUALOT_BERRY
+	.2byte ITEM_HONDEW_BERRY
+	.2byte ITEM_GREPA_BERRY
+	.2byte ITEM_TAMATO_BERRY
+	.2byte ITEM_PP_UP
+	.2byte ITEM_NONE
+	release
+	end
 
 SlateportCity_EventScript_EffortRibbonWoman::
 	lock
@@ -512,7 +560,9 @@ SlateportCity_PokemartDecor_Dolls:
 	.2byte DECOR_AZURILL_DOLL
 	.2byte DECOR_MARILL_DOLL
 	.2byte DECOR_SKITTY_DOLL
-	pokemartlistend
+	.2byte DECOR_NONE
+	release
+	end
 
 SlateportCity_EventScript_ComeBackWithSecretPower::
 	msgbox gText_ComeBackWithSecretPower, MSGBOX_DEFAULT
@@ -546,7 +596,9 @@ SlateportCity_PokemartDecor:
 	.2byte DECOR_A_NOTE_MAT
 	.2byte DECOR_B_NOTE_MAT
 	.2byte DECOR_C_HIGH_NOTE_MAT
-	pokemartlistend
+	.2byte DECOR_NONE
+	release
+	end
 
 SlateportCity_EventScript_PowerTMClerk::
 	lock
@@ -560,9 +612,11 @@ SlateportCity_EventScript_PowerTMClerk::
 
 	.align 2
 SlateportCity_Pokemart_PowerTMs:
-	.2byte ITEM_TM_HIDDEN_POWER
-	.2byte ITEM_TM_SECRET_POWER
-	pokemartlistend
+	.2byte ITEM_TM10  @ Hidden Power
+	.2byte ITEM_TM43  @ Secret Power
+	.2byte ITEM_NONE
+	release
+	end
 
 @ Scene with Capt Sterns interview and Team Aqua announcing plans to steal Submarine
 SlateportCity_EventScript_CaptStern::
@@ -1375,3 +1429,22 @@ SlateportCity_Text_TakingBattleTentChallenge:
 	.string "After all, a tough TRAINER is\n"
 	.string "the perfect fit for the BATTLE TENT!\p"
 	.string "Give it your best effort!$"
+
+SlateportGiftMon_Text_0:
+	.string "Hello! Boy have I got the thing for you!\n"
+	.string "Do you want this POKéMON?$"
+
+SlateportGiftMon_Text_1:
+	.string "Received Klink$"
+
+SlateportGiftMon_Text_2:
+	.string "There's no room!$"
+
+SlateportGiftMon_Text_3:
+	.string "Makes sense. I'm just trying to get rid\n"
+	.string "of it.$"
+
+SlateportGiftMon_Text_4:
+	.string "Nice, now that thing can stop ruining my\n"
+	.string "artwork. Erm... I mean take care of Klink\l"
+	.string "for me!$"

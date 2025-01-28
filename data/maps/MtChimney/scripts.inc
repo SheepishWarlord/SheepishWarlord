@@ -1,3 +1,17 @@
+MtChimney_EventScript_Tabitha::
+	lockall
+	msgbox MtChimney_EventScript_Tabitha_Text_0
+	waitmessage
+	msgbox MtChimney_EventScript_Tabitha_Text_1
+	waitmessage
+	msgbox MtChimney_EventScript_Tabitha_Text_2
+	waitmessage
+	msgbox MtChimney_EventScript_Tabitha_Text_3
+	waitmessage
+	releaseall
+	return
+
+
 .set LOCALID_ARCHIE, 1
 .set LOCALID_MAXIE, 2
 .set LOCALID_TABITHA, 3
@@ -111,7 +125,6 @@ MtChimney_EventScript_LavaCookieLady::
 	msgbox MtChimney_Text_ThankYouDear, MSGBOX_DEFAULT
 	checkitemspace ITEM_LAVA_COOKIE
 	call_if_eq VAR_RESULT, TRUE, MtChimney_EventScript_RemoveMoney
-.if OW_SHOW_ITEM_DESCRIPTIONS == OW_ITEM_DESCRIPTIONS_OFF
 	giveitem ITEM_LAVA_COOKIE
 	goto_if_eq VAR_RESULT, FALSE, MtChimney_EventScript_BagIsFull
 	hidemoneybox
@@ -123,19 +136,6 @@ MtChimney_EventScript_BagIsFull::
 	hidemoneybox
 	release
 	end
-.else
-	hidemoneybox
-	giveitem ITEM_LAVA_COOKIE
-	goto_if_eq VAR_RESULT, FALSE, MtChimney_EventScript_BagIsFull
-	release
-	end
-
-MtChimney_EventScript_BagIsFull::
-	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
-	release
-	end
-.endif @ OW_SHOW_ITEM_DESCRIPTIONS
-
 
 MtChimney_EventScript_RemoveMoney::
 	removemoney 200
@@ -412,11 +412,6 @@ MtChimney_EventScript_BusyAquaGrunt3::
 	msgbox MtChimney_Text_MagmasNameSimilar, MSGBOX_SIGN
 	end
 
-MtChimney_EventScript_Tabitha::
-	trainerbattle_single TRAINER_TABITHA_MT_CHIMNEY, MtChimney_Text_TabithaIntro, MtChimney_Text_TabithaDefeat
-	msgbox MtChimney_Text_TabithaPostBattle, MSGBOX_AUTOCLOSE
-	end
-
 MtChimney_EventScript_Grunt2::
 	trainerbattle_single TRAINER_GRUNT_MT_CHIMNEY_2, MtChimney_Text_Grunt2Intro, MtChimney_Text_Grunt2Defeat
 	msgbox MtChimney_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
@@ -462,7 +457,6 @@ MtChimney_EventScript_MeteoriteMachine::
 	goto_if_eq VAR_RESULT, NO, MtChimney_EventScript_LeaveMeteoriteAlone
 	msgbox MtChimney_Text_PlayerRemovedMeteorite, MSGBOX_DEFAULT
 	giveitem ITEM_METEORITE
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_METEORITE
 	releaseall
 	end
@@ -859,3 +853,19 @@ MtChimney_Text_SawyerPostRematch:
 	.string "Actually, it really is hot here.\n"
 	.string "I'm overdressed for these parts.$"
 
+MtChimney_EventScript_Tabitha_Text_0:
+	.string "Flannery: I already beat you! Just let\n"
+	.string "me through!$"
+
+MtChimney_EventScript_Tabitha_Text_1:
+	.string "Tabitha: Hehehe, I already delivered\n"
+	.string "the meteorite to the boss. Once he\l"
+	.string "gets the energy to the creature, this\l"
+	.string "mountain wil go boom.$"
+
+MtChimney_EventScript_Tabitha_Text_2:
+	.string "BOOM!$"
+
+MtChimney_EventScript_Tabitha_Text_3:
+	.string "Flannery: This is bad... Hey! Kid! Beat up\n"
+	.string "Maxie for me, will ya?$"

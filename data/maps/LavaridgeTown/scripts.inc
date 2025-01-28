@@ -1,3 +1,248 @@
+LavaridgeTown_EventScript_EggWoman::
+	lock
+	faceplayer
+	goto_if_set FLAG_RECEIVED_LAVARIDGE_EGG, LavaridgeTown_EventScript_EggWoman_2
+LavaridgeTown_EventScript_EggWoman_1:
+	msgbox LavaridgeTown_Text_HaveEggWillYouTakeIt, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq LavaridgeTown_EventScript_EggWoman_5
+LavaridgeTown_EventScript_EggWoman_4:
+	getpartysize
+	compare VAR_RESULT, 6
+	goto_if_eq LavaridgeTown_EventScript_EggWoman_8
+LavaridgeTown_EventScript_EggWoman_7:
+	msgbox LavaridgeTown_Text_HopeYoullWalkPlentyWithEgg, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_LAVARIDGE_EGG
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox LavaridgeTown_Text_ReceivedTheEgg
+	waitfanfare
+	random 19
+	compare VAR_RESULT, 1
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_11
+	compare VAR_RESULT, 3
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_77
+LavaridgeTown_EventScript_EggWoman_75:
+	compare VAR_RESULT, 4
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_74
+LavaridgeTown_EventScript_EggWoman_72:
+	compare VAR_RESULT, 5
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_71
+LavaridgeTown_EventScript_EggWoman_69:
+	compare VAR_RESULT, 6
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_68
+LavaridgeTown_EventScript_EggWoman_66:
+	compare VAR_RESULT, 7
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_65
+LavaridgeTown_EventScript_EggWoman_63:
+	compare VAR_RESULT, 8
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_62
+LavaridgeTown_EventScript_EggWoman_60:
+	compare VAR_RESULT, 9
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_59
+LavaridgeTown_EventScript_EggWoman_57:
+	compare VAR_RESULT, 10
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_56
+LavaridgeTown_EventScript_EggWoman_54:
+	compare VAR_RESULT, 11
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_53
+LavaridgeTown_EventScript_EggWoman_51:
+	compare VAR_RESULT, 12
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_50
+LavaridgeTown_EventScript_EggWoman_48:
+	compare VAR_RESULT, 13
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_47
+LavaridgeTown_EventScript_EggWoman_45:
+	compare VAR_RESULT, 14
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_44
+LavaridgeTown_EventScript_EggWoman_42:
+	compare VAR_RESULT, 15
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_41
+LavaridgeTown_EventScript_EggWoman_39:
+	compare VAR_RESULT, 16
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_38
+LavaridgeTown_EventScript_EggWoman_36:
+	compare VAR_RESULT, 17
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_35
+LavaridgeTown_EventScript_EggWoman_33:
+	compare VAR_RESULT, 18
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_32
+LavaridgeTown_EventScript_EggWoman_30:
+	compare VAR_RESULT, 19
+	goto_if_lt LavaridgeTown_EventScript_EggWoman_29
+LavaridgeTown_EventScript_EggWoman_10:
+	release
+	end
+
+LavaridgeTown_EventScript_EggWoman_2:
+	goto LavaridgeTown_EventScript_ReceivedEgg
+	goto LavaridgeTown_EventScript_EggWoman_1
+
+LavaridgeTown_EventScript_EggWoman_5:
+	goto LavaridgeTown_EventScript_DeclineEgg
+	goto LavaridgeTown_EventScript_EggWoman_4
+
+LavaridgeTown_EventScript_EggWoman_8:
+	goto LavaridgeTown_EventScript_NoRoomForEgg
+	goto LavaridgeTown_EventScript_EggWoman_7
+
+LavaridgeTown_EventScript_EggWoman_11:
+	giveegg SPECIES_PICHU
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_12:
+	giveegg SPECIES_CLEFFA
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_13:
+	giveegg SPECIES_IGGLYBUFF
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_14:
+	giveegg SPECIES_TOGEPI
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_15:
+	giveegg SPECIES_TYROGUE
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_16:
+	giveegg SPECIES_SMOOCHUM
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_17:
+	giveegg SPECIES_ELEKID
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_18:
+	giveegg SPECIES_MAGBY
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_19:
+	giveegg SPECIES_AZURILL
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_20:
+	giveegg SPECIES_WYNAUT
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_21:
+	giveegg SPECIES_BUDEW
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_22:
+	giveegg SPECIES_CHINGLING
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_23:
+	giveegg SPECIES_BONSLY
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_24:
+	giveegg SPECIES_MIME_JR
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_25:
+	giveegg SPECIES_HAPPINY
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_26:
+	giveegg SPECIES_MUNCHLAX
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_27:
+	giveegg SPECIES_RIOLU
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_28:
+	giveegg SPECIES_MANTYKE
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_29:
+	compare VAR_RESULT, 17
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_28
+	goto LavaridgeTown_EventScript_EggWoman_10
+
+LavaridgeTown_EventScript_EggWoman_32:
+	compare VAR_RESULT, 16
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_27
+	goto LavaridgeTown_EventScript_EggWoman_30
+
+LavaridgeTown_EventScript_EggWoman_35:
+	compare VAR_RESULT, 15
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_26
+	goto LavaridgeTown_EventScript_EggWoman_33
+
+LavaridgeTown_EventScript_EggWoman_38:
+	compare VAR_RESULT, 14
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_25
+	goto LavaridgeTown_EventScript_EggWoman_36
+
+LavaridgeTown_EventScript_EggWoman_41:
+	compare VAR_RESULT, 13
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_24
+	goto LavaridgeTown_EventScript_EggWoman_39
+
+LavaridgeTown_EventScript_EggWoman_44:
+	compare VAR_RESULT, 12
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_23
+	goto LavaridgeTown_EventScript_EggWoman_42
+
+LavaridgeTown_EventScript_EggWoman_47:
+	compare VAR_RESULT, 11
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_22
+	goto LavaridgeTown_EventScript_EggWoman_45
+
+LavaridgeTown_EventScript_EggWoman_50:
+	compare VAR_RESULT, 10
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_21
+	goto LavaridgeTown_EventScript_EggWoman_48
+
+LavaridgeTown_EventScript_EggWoman_53:
+	compare VAR_RESULT, 9
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_20
+	goto LavaridgeTown_EventScript_EggWoman_51
+
+LavaridgeTown_EventScript_EggWoman_56:
+	compare VAR_RESULT, 8
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_19
+	goto LavaridgeTown_EventScript_EggWoman_54
+
+LavaridgeTown_EventScript_EggWoman_59:
+	compare VAR_RESULT, 7
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_18
+	goto LavaridgeTown_EventScript_EggWoman_57
+
+LavaridgeTown_EventScript_EggWoman_62:
+	compare VAR_RESULT, 6
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_17
+	goto LavaridgeTown_EventScript_EggWoman_60
+
+LavaridgeTown_EventScript_EggWoman_65:
+	compare VAR_RESULT, 5
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_16
+	goto LavaridgeTown_EventScript_EggWoman_63
+
+LavaridgeTown_EventScript_EggWoman_68:
+	compare VAR_RESULT, 4
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_15
+	goto LavaridgeTown_EventScript_EggWoman_66
+
+LavaridgeTown_EventScript_EggWoman_71:
+	compare VAR_RESULT, 3
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_14
+	goto LavaridgeTown_EventScript_EggWoman_69
+
+LavaridgeTown_EventScript_EggWoman_74:
+	compare VAR_RESULT, 2
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_13
+	goto LavaridgeTown_EventScript_EggWoman_72
+
+LavaridgeTown_EventScript_EggWoman_77:
+	compare VAR_RESULT, 1
+	goto_if_gt LavaridgeTown_EventScript_EggWoman_12
+	goto LavaridgeTown_EventScript_EggWoman_75
+
+
 .set LOCALID_RIVAL_ON_BIKE, 7
 .set LOCALID_RIVAL, 8
 
@@ -232,22 +477,6 @@ LavaridgeTown_EventScript_ExpertF::
 	msgbox LavaridgeTown_Text_OhYouLikeHotSprings, MSGBOX_NPC
 	end
 
-LavaridgeTown_EventScript_EggWoman::
-	lock
-	faceplayer
-	goto_if_set FLAG_RECEIVED_LAVARIDGE_EGG, LavaridgeTown_EventScript_ReceivedEgg
-	msgbox LavaridgeTown_Text_HaveEggWillYouTakeIt, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, LavaridgeTown_EventScript_DeclineEgg
-	getpartysize
-	goto_if_eq VAR_RESULT, PARTY_SIZE, LavaridgeTown_EventScript_NoRoomForEgg
-	msgbox LavaridgeTown_Text_HopeYoullWalkPlentyWithEgg, MSGBOX_DEFAULT
-	setflag FLAG_RECEIVED_LAVARIDGE_EGG
-	playfanfare MUS_OBTAIN_ITEM
-	message LavaridgeTown_Text_ReceivedTheEgg
-	waitfanfare
-	giveegg SPECIES_WYNAUT
-	release
-	end
 
 LavaridgeTown_EventScript_ReceivedEgg::
 	msgbox LavaridgeTown_Text_EverySoOftenEggFoundAtDayCare, MSGBOX_DEFAULT
@@ -406,4 +635,3 @@ LavaridgeTown_Text_GymSign:
 LavaridgeTown_Text_HerbShopSign:
 	.string "POKéMON HERB SHOP\n"
 	.string "“Bitter taste--better cure!”$"
-

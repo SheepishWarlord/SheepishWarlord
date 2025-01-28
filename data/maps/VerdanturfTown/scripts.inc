@@ -1,3 +1,129 @@
+MovePlayertoWally1::
+	lockall
+	applymovement OBJ_EVENT_ID_PLAYER, MovePlayertoWally1a
+	goto VerdanturfTown_EventScript_WallyFight
+	return
+
+
+MovePlayertoWally1a:
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	step_end
+
+MovePlayertoWally2::
+	lockall
+	applymovement OBJ_EVENT_ID_PLAYER, MovePlayertoWally2a
+	goto VerdanturfTown_EventScript_WallyFight
+	return
+
+
+MovePlayertoWally2a:
+	walk_down
+	walk_down
+	walk_right
+	step_end
+
+MovePlayertoWally3::
+	lockall
+	applymovement OBJ_EVENT_ID_PLAYER, MovePlayertoWally3a
+	goto VerdanturfTown_EventScript_WallyFight
+	return
+
+
+MovePlayertoWally3a:
+	walk_right
+	walk_right
+	step_end
+
+MovePlayertoWally4::
+	lockall
+	applymovement OBJ_EVENT_ID_PLAYER, MovePlayertoWally4a
+	goto VerdanturfTown_EventScript_WallyFight
+	return
+
+
+MovePlayertoWally4a:
+	walk_up
+	walk_up
+	walk_right
+	step_end
+
+MovePlayertoWally5::
+	lockall
+	applymovement OBJ_EVENT_ID_PLAYER, MovePlayertoWally5a
+	goto VerdanturfTown_EventScript_WallyFight
+	return
+
+
+MovePlayertoWally5a:
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+	step_end
+
+VerdanturfTown_EventScript_WallyFight::
+	lockall
+	applymovement 5, Face_LEFT
+	msgbox VerdanturfTown_EventScript_WallyFight_Text_0
+	waitmessage
+	msgbox VerdanturfTown_EventScript_WallyFight_Text_1
+	waitmessage
+	msgbox VerdanturfTown_EventScript_WallyFight_Text_2
+	waitmessage
+	msgbox VerdanturfTown_EventScript_WallyFight_Text_3
+	waitmessage
+	trainerbattle_no_intro TRAINER_WALLY_MAUVILLE, Text_Wally_Mauville_Defeated
+	msgbox VerdanturfTown_EventScript_WallyFight_Text_4
+	waitmessage
+	msgbox VerdanturfTown_EventScript_WallyFight_Text_5
+	applymovement 5, WallyRunsAway1
+	waitmovement 5
+	delay 20
+	applymovement 5, WallyRunsAway2
+	waitmovement 5
+	removeobject 5
+	setflag FLAG_HIDE_MAUVILLE_CITY_WALLY
+	setvar VAR_VERDANTURF_TOWN_STATE, 1
+	releaseall
+	return
+
+
+Face_LEFT:
+	face_left
+	step_end
+
+WallyRunsAway1:
+	walk_up
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	face_right
+	face_right
+	face_right
+	face_right
+	step_end
+
+WallyRunsAway2:
+	face_left
+	face_left
+	face_left
+	face_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	step_end
+
 .set LOCALID_TWIN, 2
 
 VerdanturfTown_MapScripts::
@@ -125,3 +251,37 @@ VerdanturfTown_Text_RusturfTunnelSign:
 	.string "“The tunnel project has been\n"
 	.string "canceled.”$"
 
+VerdanturfTown_EventScript_WallyFight_Text_0:
+	.string "(Wally) Hey, {PLAYER}, how have you\n"
+	.string "been? I've been hanging around here,\l"
+	.string "training I guess.$"
+
+VerdanturfTown_EventScript_WallyFight_Text_1:
+	.string "I dunno, I wanna go out and adventure,\n"
+	.string "like you. I've been working up the\l"
+	.string "courage to go to Mauville and challenge\l"
+	.string "the gym leader there.$"
+
+VerdanturfTown_EventScript_WallyFight_Text_2:
+	.string "My uncle says I shouldn't be leaving,\n"
+	.string "that it's too dangerous. But... I just\l"
+	.string "can't get past the prospect of\l"
+	.string "adventure.$"
+
+VerdanturfTown_EventScript_WallyFight_Text_3:
+	.string "I guess I just need a push to leave.\n"
+	.string "Would you battle me? I want to feel the\l"
+	.string "thrill of battle, even just once.$"
+
+VerdanturfTown_EventScript_WallyFight_Text_4:
+	.string "huh... I won't lie to you, I expected to\n"
+	.string "win. I've been training so hard, and yet\l"
+	.string "it still wasn't enough...$"
+
+VerdanturfTown_EventScript_WallyFight_Text_5:
+	.string "I think I'll stay in Verdanturf for now...\n"
+	.string "thanks, {PLAYER}, at least I know you\l"
+	.string "weren't holding back.$"
+
+Text_Wally_Mauville_Defeated::
+	.string "...$"

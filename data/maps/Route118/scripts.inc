@@ -1,3 +1,58 @@
+Route118_EventScript_StevenTrigger::
+	playse SE_LEDGE
+	applymovement LOCALID_STEVEN, Route118_Movement_StevenJumpLedge
+	waitmovement 0
+	delay 30
+	msgbox Route118_Text_StevenQuestions, MSGBOX_DEFAULT
+	closemessage
+	giveitem ITEM_MEGA_RING
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox Route118_EventScript_StevenTrigger_Text_0, MSGBOX_AUTOCLOSE
+	waitfanfare
+	trainerbattle_single TRAINER_NORMAN_5, Route118_EventScript_StevenTrigger_Text_1, Route118_EventScript_StevenTrigger_Text_2, Route118_EventScript_StevenTrigger4
+	releaseall
+	end
+
+
+Route118_EventScript_StevenTrigger4::
+	msgbox Route118_EventScript_StevenTrigger4_Text_0
+	giveitem ITEM_METAGROSSITE
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox Route118_EventScript_StevenTrigger4_Text_1, MSGBOX_AUTOCLOSE
+	waitfanfare
+	msgbox Route118_EventScript_StevenTrigger4_Text_2
+	waitmessage
+	msgbox Route118_EventScript_StevenTrigger4_Text_3
+	waitmessage
+	compare VAR_0x8008, 0
+	goto_if_eq Route118_EventScript_StevenTrigger4_2
+	compare VAR_0x8008, 1
+	goto_if_eq Route118_EventScript_StevenTrigger4_3
+	call Route118_EventScript_StevenExit2
+Route118_EventScript_StevenTrigger4_1:
+	setvar VAR_ROUTE118_STATE, 1
+	removeobject LOCALID_STEVEN
+	releaseall
+	end
+
+Route118_EventScript_StevenTrigger4_2:
+	call Route118_EventScript_StevenExit0
+	goto Route118_EventScript_StevenTrigger4_1
+
+Route118_EventScript_StevenTrigger4_3:
+	call Route118_EventScript_StevenExit1
+	goto Route118_EventScript_StevenTrigger4_1
+
+
+Route118_EventScript_GoodRodFisherman::
+	lock
+	faceplayer
+	msgbox Route118_EventScript_GoodRodFisherman_Text_0
+	waitmessage
+	release
+	end
+
+
 .set LOCALID_STEVEN, 19
 
 Route118_MapScripts::
@@ -22,19 +77,10 @@ Route118_OnFrame:
 	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_EndEventAndCleanup_1
 	.2byte 0
 
-Route118_EventScript_GoodRodFisherman::
-	lock
-	faceplayer
-	goto_if_set FLAG_RECEIVED_GOOD_ROD, Route118_EventScript_ReceivedGoodRod
-	msgbox Route118_Text_YouAgreeGoodRodIsGood, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, Route118_EventScript_ReceiveGoodRod
-	goto_if_eq VAR_RESULT, NO, Route118_EventScript_DeclineGoodRod
-	end
 
 Route118_EventScript_ReceiveGoodRod::
 	msgbox Route118_Text_IdenticalMindsTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_GOOD_ROD
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_GOOD_ROD
 	msgbox Route118_Text_TryYourLuckFishing, MSGBOX_DEFAULT
 	release
@@ -88,21 +134,6 @@ Route118_EventScript_StevenTrigger2::
 	applymovement LOCALID_STEVEN, Route118_Movement_StevenApproachLedge2
 	waitmovement 0
 	goto Route118_EventScript_StevenTrigger
-	end
-
-Route118_EventScript_StevenTrigger::
-	playse SE_LEDGE
-	applymovement LOCALID_STEVEN, Route118_Movement_StevenJumpLedge
-	waitmovement 0
-	delay 30
-	msgbox Route118_Text_StevenQuestions, MSGBOX_DEFAULT
-	closemessage
-	call_if_eq VAR_0x8008, 0, Route118_EventScript_StevenExit0
-	call_if_eq VAR_0x8008, 1, Route118_EventScript_StevenExit1
-	call_if_eq VAR_0x8008, 2, Route118_EventScript_StevenExit2
-	setvar VAR_ROUTE118_STATE, 1
-	removeobject LOCALID_STEVEN
-	releaseall
 	end
 
 Route118_EventScript_StevenExit0::
@@ -262,6 +293,9 @@ Route118_Text_StevenQuestions:
 	.string "Of course, it's not any of my business.\p"
 	.string "It would be nice if we were to meet\n"
 	.string "again somewhere.$"
+	.string "For now, here's a quick present\n"
+	.string "Let's battle to test it out!$"
+
 
 Route118_Text_YouAgreeGoodRodIsGood:
 	.string "Hmm!\n"
@@ -300,3 +334,38 @@ Route118_Text_RouteSign119:
 	.string "ROUTE 118\n"
 	.string "{UP_ARROW} ROUTE 119$"
 
+Route118_EventScript_StevenTrigger_Text_0:
+	.string "{PLAYER} obtained the Mega Ring!$"
+
+Route118_EventScript_StevenTrigger_Text_1:
+	.string "Let's do this!$"
+
+Route118_EventScript_StevenTrigger_Text_2:
+	.string "Great job!$"
+
+Route118_EventScript_StevenTrigger4_Text_0:
+	.string "You did great! I hate to shower you with\n"
+	.string "gifts, but here's something as a thanks\l"
+	.string "for your help of Mt. Chimney.$"
+
+Route118_EventScript_StevenTrigger4_Text_1:
+	.string "{PLAYER} obtained the Metagrossite!$"
+
+Route118_EventScript_StevenTrigger4_Text_2:
+	.string "Just like myself, there will be a lot of\n"
+	.string "trainers across the region who guard\l"
+	.string "the Mega Evolution stones. If you want\l"
+	.string "to Mega Evolve more of you're POKéMON,\l"
+	.string "you'll have to beat them.$"
+
+Route118_EventScript_StevenTrigger4_Text_3:
+	.string "Oh! Also, I may have an opportunity for\n"
+	.string "you later, but that's all I can say for\l"
+	.string "certain. For now, farewell {PLAYER}!$"
+
+Route118_EventScript_GoodRodFisherman_Text_0:
+	.string "Hello. I had a good rod, but I lost it\n"
+	.string "when exploring North of Rustboro. I\l"
+	.string "was knocked out, but when I came back,\l"
+	.string "my good rod was missing. I wonder where\l"
+	.string "it went?$"

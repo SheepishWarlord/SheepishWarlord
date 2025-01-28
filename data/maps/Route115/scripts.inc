@@ -1,3 +1,10 @@
+Route115_EventScript_ChallengeSign::
+	lock
+	msgbox Route115_EventScript_ChallengeSign_Text_0, MSGBOX_SIGN
+	release
+	return
+
+
 Route115_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, Route115_OnLoad
 	map_script MAP_SCRIPT_ON_TRANSITION, Route115_OnTransition
@@ -143,3 +150,6 @@ Route115_Text_MeteorFallsSign:
 	.string "METEOR FALLS\n"
 	.string "FALLARBOR TOWN THROUGH HERE$"
 
+Route115_EventScript_ChallengeSign_Text_0:
+	.string "The road to the Spring of Wisdom is\n"
+	.string "perilous, be wary!$"

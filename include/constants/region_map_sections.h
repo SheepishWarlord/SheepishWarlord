@@ -214,7 +214,13 @@
 #define MAPSEC_ALTERING_CAVE                0xD2
 #define MAPSEC_NAVEL_ROCK                   0xD3
 #define MAPSEC_TRAINER_HILL                 0xD4
-#define MAPSEC_NONE                         0xD5
+#define MAPSEC_WOODS_CLEARING               0xD5
+#define MAPSEC_SPRING_OF_WISDOM             0xD6
+#define MAPSEC_DEWFORD_SHORES               0xD7
+#define MAPSEC_SECLUDED_RIVER               0xD8
+#define MAPSEC_WEST_MT_CHIMNEY              0xD9
+#define MAPSEC_TIMELESS_GROVE               0xDA
+#define MAPSEC_NONE                         0xDB
 
 #define METLOC_SPECIAL_EGG                  0xFD
 #define METLOC_IN_GAME_TRADE                0xFE

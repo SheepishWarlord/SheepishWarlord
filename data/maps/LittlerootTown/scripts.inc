@@ -1,3 +1,19 @@
+LittlerootTown_EventScript_99Candies::
+	lockall
+	faceplayer
+	msgbox LittlerootTown_EventScript_99Candies_Text_0, MSGBOX_YESNO
+	compare VAR_RESULT, 1
+	goto_if_eq LittlerootTown_EventScript_99Candies_2
+	msgbox LittlerootTown_EventScript_99Candies_Text_1
+LittlerootTown_EventScript_99Candies_1:
+	releaseall
+	return
+
+LittlerootTown_EventScript_99Candies_2:
+	giveitem ITEM_RARE_CANDY, 99
+	goto LittlerootTown_EventScript_99Candies_1
+
+
 .set LOCALID_TWIN, 1
 .set LOCALID_MOM, 4
 .set LOCALID_RIVAL, 7
@@ -1019,3 +1035,8 @@ LittlerootTown_Text_BirchSomethingToShowYouAtLab:
 	.string "I have something to show you.\n"
 	.string "Let's go to my LAB.$"
 
+LittlerootTown_EventScript_99Candies_Text_0:
+	.string "Hey there kiddo, you want some candy?$"
+
+LittlerootTown_EventScript_99Candies_Text_1:
+	.string "You sure?$"

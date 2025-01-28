@@ -22,6 +22,11 @@
       "map": "MAP_ROUTE117",
       "offset": 0,
       "direction": "right"
+    },
+    {
+      "map": "MAP_SECLUDED_RIVER",
+      "offset": -34,
+      "direction": "down"
     }
   ],
   "object_events": [
@@ -76,6 +81,19 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "VerdanturfTown_EventScript_Camper",
       "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_WALLY",
+      "x": 21,
+      "y": 10,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MauvilleCity_EventScript_Wally",
+      "flag": "FLAG_HIDE_MAUVILLE_CITY_WALLY"
     }
   ],
   "warp_events": [
@@ -129,7 +147,53 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 12,
+      "elevation": 0,
+      "var": "VAR_VERDANTURF_TOWN_STATE",
+      "var_value": "0",
+      "script": "MovePlayertoWally5"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_VERDANTURF_TOWN_STATE",
+      "var_value": "0",
+      "script": "MovePlayertoWally4"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 10,
+      "elevation": 0,
+      "var": "VAR_VERDANTURF_TOWN_STATE",
+      "var_value": "0",
+      "script": "MovePlayertoWally3"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 9,
+      "elevation": 0,
+      "var": "VAR_VERDANTURF_TOWN_STATE",
+      "var_value": "0",
+      "script": "MovePlayertoWally2"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 8,
+      "elevation": 0,
+      "var": "VAR_VERDANTURF_TOWN_STATE",
+      "var_value": "0",
+      "script": "MovePlayertoWally1"
+    }
+  ],
   "bg_events": [
     {
       "type": "sign",

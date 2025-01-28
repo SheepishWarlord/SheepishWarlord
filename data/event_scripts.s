@@ -1152,3 +1152,23 @@ EventScript_VsSeekerChargingDone::
 	.include "data/scripts/follower.inc"
 	.include "data/text/save.inc"
 	.include "data/text/birch_speech.inc"
+	
+	.include "data/maps/WoodsClearing/scripts.inc"
+
+	.include "data/maps/SpringofWisdom/scripts.inc"
+
+	.include "data/maps/DewfordShores/scripts.inc"
+
+	.include "data/maps/GraniteCave_2F/scripts.inc"
+
+	.include "data/maps/GraniteCave_3F/scripts.inc"
+
+	.include "data/maps/GraniteCaveB3F/scripts.inc"
+
+	.include "data/maps/SecludedRiver/scripts.inc"
+
+	.include "data/maps/WestMtChimney/scripts.inc"
+
+	.include "data/maps/WestMtChimney2/scripts.inc"
+
+	.include "data/maps/TimelessGrove/scripts.inc"

@@ -1,3 +1,42 @@
+FallarborGiftMon::
+	lockall
+	faceplayer
+	goto_if_unset FLAG_FALLARBOR_GIFT, FallarborGiftMon_2
+	msgbox FallarborGiftMon_Text_4
+FallarborGiftMon_1:
+	waitmessage
+	releaseall
+	end
+
+FallarborGiftMon_2:
+	msgbox FallarborGiftMon_Text_0, MSGBOX_YESNO
+	compare VAR_RESULT, YES
+	goto_if_eq FallarborGiftMon_5
+	msgbox FallarborGiftMon_Text_3
+	goto FallarborGiftMon_1
+
+FallarborGiftMon_5:
+	givemon SPECIES_TEDDIURSA, 10, item = ITEM_FLAME_ORB
+	compare VAR_RESULT, MON_GIVEN_TO_PARTY
+	goto_if_eq FallarborGiftMon_8
+	compare VAR_RESULT, MON_GIVEN_TO_PC
+	goto_if_eq FallarborGiftMon_9
+	msgbox FallarborGiftMon_Text_2
+	goto FallarborGiftMon_1
+
+FallarborGiftMon_8:
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox FallarborGiftMon_Text_1
+	setflag FLAG_FALLARBOR_GIFT
+	goto FallarborGiftMon_1
+
+FallarborGiftMon_9:
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox FallarborGiftMon_Text_1
+	setflag FLAG_FALLARBOR_GIFT
+	goto FallarborGiftMon_1
+
+
 FallarborTown_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, FallarborTown_OnTransition
 	.byte 0
@@ -93,3 +132,22 @@ FallarborTown_Text_MoveTutorSign:
 	.string "MOVE TUTOR'S HOUSE\n"
 	.string "“New moves taught to POKéMON.”$"
 
+FallarborGiftMon_Text_0:
+	.string "Hey, I hate to ask you, but you seem\n"
+	.string "like the travelling type. My POKéMON\l"
+	.string "doesn't like the air here. Could you\l"
+	.string "bring it with you on your travels away\l"
+	.string "from here?$"
+
+FallarborGiftMon_Text_1:
+	.string "Received Teddiursa$"
+
+FallarborGiftMon_Text_2:
+	.string "There's no room!$"
+
+FallarborGiftMon_Text_3:
+	.string "Ahh, I see, you're to good for my\n"
+	.string "Teddiursa, are you?$"
+
+FallarborGiftMon_Text_4:
+	.string "Thank you! I hope Teddiursa does well!$"
