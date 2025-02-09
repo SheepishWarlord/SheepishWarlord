@@ -4422,14 +4422,14 @@
       "blockdata_filepath": "data/layouts/WoodsClearing/map.bin"
     },
     {
-      "id": "LAYOUT_SPRINGOF_WISDOM",
-      "name": "SpringofWisdom_Layout",
+      "id": "LAYOUT_SPRING_OF_WISDOM",
+      "name": "SpringOfWisdom_Layout",
       "width": 40,
       "height": 20,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Fallarbor",
-      "border_filepath": "data/layouts/SpringofWisdom/border.bin",
-      "blockdata_filepath": "data/layouts/SpringofWisdom/map.bin"
+      "border_filepath": "data/layouts/SpringOfWisdom/border.bin",
+      "blockdata_filepath": "data/layouts/SpringOfWisdom/map.bin"
     },
     {
       "id": "LAYOUT_DEWFORD_SHORES",

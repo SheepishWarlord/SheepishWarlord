@@ -2800,6 +2800,22 @@ BattleScript_MoveEnd::
 	moveendall
 	end
 
+BattleScript_EffectStonestorm::
+	attackcanceler
+	call BattleScript_CheckPrimalWeather
+	setfieldweather ENUM_WEATHER_RAIN
+	goto BattleScript_MoveWeatherChangeRet	
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	critcalc
+	damagecalc
+	adjustdamage
+	call BattleScript_Hit_RetFromAtkAnimation
+	tryfaintmon BS_TARGET
+	moveendall
+	end
+
 BattleScript_EffectHit_Ret::
 	attackcanceler
 BattleScript_EffectHit_RetFromAccCheck::
@@ -4856,6 +4872,27 @@ BattleScript_EffectWillOWisp::
 	seteffectprimary MOVE_EFFECT_BURN
 	goto BattleScript_MoveEnd
 
+BattleScript_EffectFrostwind::
+	attackcanceler
+	attackstring
+	ppreduce
+	jumpifsubstituteblocks BattleScript_ButItFailed
+	jumpifstatus BS_TARGET, STATUS1_FROSTBITE, BattleScript_AlreadyFrostbitten
+	jumpiftype BS_TARGET, TYPE_ICE, BattleScript_NotAffected
+	jumpifability BS_TARGET, ABILITY_COMATOSE, BattleScript_AbilityProtectsDoesntAffect
+	jumpifability BS_TARGET, ABILITY_PURIFYING_SALT, BattleScript_AbilityProtectsDoesntAffect
+	jumpifflowerveil BattleScript_FlowerVeilProtects
+	jumpifleafguardprotected BS_TARGET, BattleScript_AbilityProtectsDoesntAffect
+	jumpifshieldsdown BS_TARGET, BattleScript_AbilityProtectsDoesntAffect
+	jumpifstatus BS_TARGET, STATUS1_ANY, BattleScript_ButItFailed
+	jumpifterrainaffected BS_TARGET, STATUS_FIELD_MISTY_TERRAIN, BattleScript_MistyTerrainPrevents
+	accuracycheck BattleScript_ButItFailed, ACC_CURR_MOVE
+	jumpifsafeguard BattleScript_SafeguardProtected
+	attackanimation
+	waitanimation
+	seteffectprimary MOVE_EFFECT_FROSTBITE
+	goto BattleScript_MoveEnd
+
 BattleScript_WaterVeilPrevents::
 	call BattleScript_AbilityPopUp
 	copybyte gEffectBattler, gBattlerTarget
@@ -4867,6 +4904,13 @@ BattleScript_AlreadyBurned::
 	setalreadystatusedmoveattempt BS_ATTACKER
 	pause B_WAIT_TIME_SHORT
 	printstring STRINGID_PKMNALREADYHASBURN
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
+BattleScript_AlreadyFrostbitten::
+	setalreadystatusedmoveattempt BS_ATTACKER
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_PKMNALREADYHASFROSTBITE
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
 
@@ -6830,6 +6874,26 @@ BattleScript_DefDownSpeedUpTrySpeed:
 	printfromtable gStatUpStringIds
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_DefDownSpeedUpRet::
+	return
+
+BattleScript_DefSpDefUp::
+	jumpifstat BS_ATTACKER, CMP_GREATER_THAN, STAT_DEF, MIN_STAT_STAGE, BattleScript_DefSpDefUpTryDef
+	jumpifstat BS_ATTACKER, CMP_EQUAL, STAT_SPEED, MAX_STAT_STAGE, BattleScript_DefDownSpeedUpRet
+BattleScript_DefSpDefUpTryDef:
+	playstatchangeanimation BS_ATTACKER, BIT_DEF, 0
+	setstatchanger STAT_DEF, 1, FALSE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | STAT_CHANGE_ALLOW_PTR | MOVE_EFFECT_CERTAIN, BattleScript_DefSpDefUpTrySpDef
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_INCREASE, BattleScript_DefSpDefUpTrySpDef
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_DefSpDefUpTrySpDef:
+	playstatchangeanimation BS_ATTACKER, BIT_SPDEF, 0
+	setstatchanger STAT_SPDEF, 1, FALSE
+	statbuffchange MOVE_EFFECT_AFFECTS_USER | STAT_CHANGE_ALLOW_PTR | MOVE_EFFECT_CERTAIN, BattleScript_DefSpDefUpRet
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_INCREASE, BattleScript_DefSpDefUpRet
+	printfromtable gStatUpStringIds
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_DefSpDefUpRet::
 	return
 
 BattleScript_KnockedOff::
@@ -10067,3 +10131,8 @@ BattleScript_EffectSnow::
 	call BattleScript_CheckPrimalWeather
 	setfieldweather ENUM_WEATHER_SNOW
 	goto BattleScript_MoveWeatherChange
+
+BattleScript_TrickyAuraActivates::
+	printstring STRINGID_PKMNTWISTEDDIMENSIONS
+	waitmessage B_WAIT_TIME_LONG
+	end3

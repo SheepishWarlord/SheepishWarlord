@@ -851,5 +851,9 @@ extern const u8 BattleScript_EffectSpicyExtract[];
 extern const u8 BattleScript_DamageToQuarterTargetHP[];
 extern const u8 BattleScript_EffectFickleBeam[];
 extern const u8 BattleScript_FickleBeamDoubled[];
+extern const u8 BattleScript_DefSpDefUp[];
+extern const u8 BattleScript_EffectStonestorm[];
+extern const u8 BattleScript_EffectFrostwind[];
+extern const u8 BattleScript_TrickyAuraActivates[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H

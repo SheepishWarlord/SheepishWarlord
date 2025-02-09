@@ -11814,8 +11814,8 @@
           }
         },
         {
-          "map": "MAP_SPRINGOF_WISDOM",
-          "base_label": "gSpringofWisdom0",
+          "map": "MAP_SPRING_OF_WISDOM",
+          "base_label": "gSpringOfWisdom0",
           "land_mons": {
             "encounter_rate": 51,
             "mons": [

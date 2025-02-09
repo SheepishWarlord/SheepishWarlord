@@ -7167,7 +7167,7 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
         .baseHP        = 80,
         .baseAttack    = 100,
         .baseDefense   = 50,
-        .baseSpeed     = 200,
+        .baseSpeed     = 220,
         .baseSpAttack  = 100,
         .baseSpDefense = 50,
         .types = MON_TYPES(TYPE_ELECTRIC),
@@ -7230,7 +7230,7 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
 #if P_FAMILY_REGIDRAGO
     [SPECIES_REGIDRAGO] =
     {
-        .baseHP        = 200,
+        .baseHP        = 220,
         .baseAttack    = 100,
         .baseDefense   = 50,
         .baseSpeed     = 80,
@@ -7628,10 +7628,10 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
     {
         .baseHP        = 74,
         .baseAttack    = 115,
-        .baseDefense   = 70,
-        .baseSpeed     = 106,
-        .baseSpAttack  = 135,
-        .baseSpDefense = 80,
+        .baseDefense   = 100,
+        .baseSpeed     = 126,
+        .baseSpAttack  = 165,
+        .baseSpDefense = 100,
         .types = MON_TYPES(TYPE_FAIRY, TYPE_FLYING),
         .catchRate = 3,
         .expYield = 116,
@@ -7692,12 +7692,12 @@ const struct SpeciesInfo gSpeciesInfoGen8[] =
 
     [SPECIES_ENAMORUS_THERIAN] =
     {
-        .baseHP        = 74,
+        .baseHP        = 104,
         .baseAttack    = 115,
-        .baseDefense   = 110,
+        .baseDefense   = 130,
         .baseSpeed     = 46,
-        .baseSpAttack  = 135,
-        .baseSpDefense = 100,
+        .baseSpAttack  = 155,
+        .baseSpDefense = 130,
         .types = MON_TYPES(TYPE_FAIRY, TYPE_FLYING),
         .catchRate = 3,
         .expYield = 116,

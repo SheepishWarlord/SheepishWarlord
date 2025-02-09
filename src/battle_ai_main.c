@@ -784,6 +784,7 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, u32 move, s32 score)
                 {
                 case EFFECT_POISON:
                 case EFFECT_WILL_O_WISP:
+                case EFFECT_FROSTWIND:
                 case EFFECT_TOXIC:
                 case EFFECT_LEECH_SEED:
                     ADJUST_SCORE(-5);
@@ -1683,6 +1684,10 @@ static s32 AI_CheckBadMove(u32 battlerAtk, u32 battlerDef, u32 move, s32 score)
             if (!AI_CanBurn(battlerAtk, battlerDef, aiData->abilities[battlerDef], BATTLE_PARTNER(battlerAtk), move, aiData->partnerMove))
                 ADJUST_SCORE(-10);
             break;
+        case EFFECT_FROSTWIND:
+            if (!AI_CanGiveFrostbite(battlerAtk, battlerDef, aiData->abilities[battlerDef], BATTLE_PARTNER(battlerAtk), move, aiData->partnerMove))
+                ADJUST_SCORE(-10);
+            break;            
         case EFFECT_MEMENTO:
             if (CountUsablePartyMons(battlerAtk) == 0 || DoesPartnerHaveSameMoveEffect(BATTLE_PARTNER(battlerAtk), battlerDef, move, aiData->partnerMove))
                 ADJUST_SCORE(-10);
@@ -2666,6 +2671,7 @@ static s32 AI_DoubleBattle(u32 battlerAtk, u32 battlerDef, u32 move, s32 score)
         case EFFECT_HAIL:
         case EFFECT_SNOWSCAPE:
         case EFFECT_RAIN_DANCE:
+        case EFFECT_STONESTORM:
         case EFFECT_SANDSTORM:
         case EFFECT_CHILLY_RECEPTION:
             if (IsMoveEffectWeather(move))
@@ -2727,6 +2733,7 @@ static s32 AI_DoubleBattle(u32 battlerAtk, u32 battlerDef, u32 move, s32 score)
             RETURN_SCORE_PLUS(WEAK_EFFECT);   // our partner benefits from sandstorm
         }
         break;
+    case EFFECT_STONESTORM:    
     case EFFECT_RAIN_DANCE:
         if (ShouldSetRain(battlerAtkPartner, atkPartnerAbility, atkPartnerHoldEffect))
         {
@@ -3739,6 +3746,7 @@ static u32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move)
         }
         break;
     case EFFECT_RAIN_DANCE:
+    case EFFECT_STONESTORM:
         if (ShouldSetRain(battlerAtk, aiData->abilities[battlerAtk], aiData->holdEffects[battlerAtk]))
         {
             ADJUST_SCORE(DECENT_EFFECT);
@@ -3872,6 +3880,9 @@ static u32 AI_CalcMoveEffectScore(u32 battlerAtk, u32 battlerDef, u32 move)
     case EFFECT_WILL_O_WISP:
         IncreaseBurnScore(battlerAtk, battlerDef, move, &score);
         break;
+    case EFFECT_FROSTWIND:
+        IncreaseFrostbiteScore(battlerAtk, battlerDef, move, &score);
+        break;        
     case EFFECT_FOLLOW_ME:
         if (isDoubleBattle
           && move != MOVE_SPOTLIGHT
@@ -4768,6 +4779,7 @@ static s32 AI_ForceSetupFirstTurn(u32 battlerAtk, u32 battlerDef, u32 move, s32 
     case EFFECT_TORMENT:
     case EFFECT_FLATTER:
     case EFFECT_WILL_O_WISP:
+    case EFFECT_FROSTWIND:
     case EFFECT_INGRAIN:
     case EFFECT_IMPRISON:
     case EFFECT_TICKLE:
@@ -4796,6 +4808,7 @@ static s32 AI_ForceSetupFirstTurn(u32 battlerAtk, u32 battlerDef, u32 move, s32 
     case EFFECT_TIDY_UP:
     case EFFECT_STICKY_WEB:
     case EFFECT_RAIN_DANCE:
+    case EFFECT_STONESTORM:
     case EFFECT_SUNNY_DAY:
     case EFFECT_SANDSTORM:
     case EFFECT_HAIL:
@@ -5236,6 +5249,10 @@ static s32 AI_PowerfulStatus(u32 battlerAtk, u32 battlerDef, u32 move, s32 score
         if (!(AI_GetWeather(AI_DATA) & (B_WEATHER_RAIN | B_WEATHER_PRIMAL_ANY)))
             ADJUST_SCORE(POWERFUL_STATUS_MOVE);
         break;
+    case EFFECT_STONESTORM:
+        if (!(AI_GetWeather(AI_DATA) & (B_WEATHER_RAIN | B_WEATHER_PRIMAL_ANY)))
+            ADJUST_SCORE(POWERFUL_STATUS_MOVE);
+        break;        
     case EFFECT_HAIL:
         if (!(AI_GetWeather(AI_DATA) & (B_WEATHER_HAIL | B_WEATHER_PRIMAL_ANY)))
             ADJUST_SCORE(POWERFUL_STATUS_MOVE);

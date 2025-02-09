@@ -4006,13 +4006,8 @@ static bool32 TryChangeBattleTerrain(u32 battler, u32 statusFlag, u8 *timer)
     if ((!(gFieldStatuses & statusFlag) && (!gBattleStruct->isSkyBattle)))
     {
         gFieldStatuses &= ~(STATUS_FIELD_TERRAIN_ANY | STATUS_FIELD_TERRAIN_PERMANENT);
-        gFieldStatuses |= statusFlag;
+        gFieldStatuses = (statusFlag| STATUS_FIELD_TERRAIN_PERMANENT);
         gDisableStructs[battler].terrainAbilityDone = FALSE;
-
-        if (GetBattlerHoldEffect(battler, TRUE) == HOLD_EFFECT_TERRAIN_EXTENDER)
-            *timer = 8;
-        else
-            *timer = 5;
 
         gBattleScripting.battler = battler;
         return TRUE;
@@ -4242,6 +4237,10 @@ u32 CanAbilityAbsorbMove(u32 battlerAtk, u32 battlerDef, u32 abilityDef, u32 mov
         if (moveType == TYPE_ELECTRIC && gMovesInfo[move].target != MOVE_TARGET_ALL_BATTLERS)
             effect = MOVE_ABSORBED_BY_DRAIN_HP_ABILITY;
         break;
+    case ABILITY_POISON_HEAL:
+        if (moveType == TYPE_POISON && gMovesInfo[move].target != MOVE_TARGET_ALL_BATTLERS)
+            effect = MOVE_ABSORBED_BY_DRAIN_HP_ABILITY;
+        break;    
     case ABILITY_WATER_ABSORB:
     case ABILITY_DRY_SKIN:
         if (moveType == TYPE_WATER)
@@ -4892,6 +4891,12 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
                 effect++;
             }
             break;
+        case ABILITY_TRICKY_AURA:
+            if(TryChangeBattleTerrain(battler, STATUS_FIELD_TRICK_ROOM, &gFieldTimers.trickRoomTimer))
+            {
+                BattleScriptPushCursorAndCallback(BattleScript_TrickyAuraActivates);
+                effect++;
+            }
         case ABILITY_INTIMIDATE:
             if (!gSpecialStatuses[battler].switchInAbilityDone)
             {
@@ -5317,7 +5322,7 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
                 {
                 SOLAR_POWER_HP_DROP:
                     BattleScriptPushCursorAndCallback(BattleScript_SolarPowerActivates);
-                    gBattleMoveDamage = GetNonDynamaxMaxHP(battler) / 8;
+                    gBattleMoveDamage = GetNonDynamaxMaxHP(battler) / 12;
                     if (gBattleMoveDamage == 0)
                         gBattleMoveDamage = 1;
                     effect++;
@@ -9648,6 +9653,10 @@ static inline u32 CalcAttackStat(struct DamageCalculationData *damageCalcData, u
         if (IS_MOVE_PHYSICAL(move))
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(2.0));
         break;
+    case ABILITY_POWER_SURGE:
+        if (IS_MOVE_SPECIAL(move))
+            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(2.0));
+        break;        
     case ABILITY_SLOW_START:
         if (gDisableStructs[battlerAtk].slowStartTimer != 0)
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(0.5));
@@ -9655,8 +9664,9 @@ static inline u32 CalcAttackStat(struct DamageCalculationData *damageCalcData, u
     case ABILITY_SOLAR_POWER:
         if (IS_MOVE_SPECIAL(move) && IsBattlerWeatherAffected(battlerAtk, B_WEATHER_SUN))
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
-        break;
-    case ABILITY_DEFEATIST:
+        if (IS_MOVE_PHYSICAL(move) && IsBattlerWeatherAffected(battlerAtk, B_WEATHER_SUN))
+            modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
+        break;    case ABILITY_DEFEATIST:
         if (gBattleMons[battlerAtk].hp <= (gBattleMons[battlerAtk].maxHP / 2))
             modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(0.5));
         break;
@@ -9686,7 +9696,7 @@ static inline u32 CalcAttackStat(struct DamageCalculationData *damageCalcData, u
             u32 partnerAbility = GetBattlerAbility(BATTLE_PARTNER(battlerAtk));
             if (partnerAbility == ABILITY_MINUS
             || (B_PLUS_MINUS_INTERACTION >= GEN_5 && partnerAbility == ABILITY_PLUS))
-                modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
+                modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(2.5));
         }
         break;
     case ABILITY_MINUS:
@@ -9695,7 +9705,7 @@ static inline u32 CalcAttackStat(struct DamageCalculationData *damageCalcData, u
             u32 partnerAbility = GetBattlerAbility(BATTLE_PARTNER(battlerAtk));
             if (partnerAbility == ABILITY_PLUS
             || (B_PLUS_MINUS_INTERACTION >= GEN_5 && partnerAbility == ABILITY_MINUS))
-                modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(1.5));
+                modifier = uq4_12_multiply_half_down(modifier, UQ_4_12(2.5));
         }
         break;
     case ABILITY_FLOWER_GIFT:
@@ -10260,8 +10270,11 @@ static inline uq4_12_t GetDefenderItemsModifier(struct DamageCalculationData *da
         {
             if (damageCalcData->updateFlags)
                 gSpecialStatuses[battlerDef].berryReduced = TRUE;
-            return (abilityDef == ABILITY_RIPEN) ? UQ_4_12(0.25) : UQ_4_12(0.5);
+            return (abilityDef == ABILITY_RIPEN) ? UQ_4_12(0.125) : UQ_4_12(0.25);
         }
+        break;
+    case HOLD_EFFECT_TOXIC_ORB:
+        return UQ_4_12(0.9);
         break;
     }
     return UQ_4_12(1.0);
@@ -10713,6 +10726,7 @@ uq4_12_t GetOverworldTypeEffectiveness(struct Pokemon *mon, u8 moveType)
          || (moveType == TYPE_WATER    && (abilityDef == ABILITY_WATER_ABSORB
                                        || abilityDef == ABILITY_DRY_SKIN
                                        || abilityDef == ABILITY_STORM_DRAIN))
+         || (moveType == TYPE_POISON   && abilityDef == ABILITY_POISON_HEAL)
          || (moveType == TYPE_ELECTRIC && (abilityDef == ABILITY_LIGHTNING_ROD // TODO: Add Gen 3/4 config check
                                        || abilityDef == ABILITY_VOLT_ABSORB
                                        || abilityDef == ABILITY_MOTOR_DRIVE)))

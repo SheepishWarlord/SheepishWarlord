@@ -177,7 +177,7 @@ Route114_EventScript_RoarGentleman::
 # 86 "data/maps/Route114/scripts.pory"
 	faceplayer
 # 87 "data/maps/Route114/scripts.pory"
-	goto_if_set FLAG_RECEIVED_TM05, Route114_EventScript_ReceivedRoar
+	goto_if_set FLAG_RECEIVED_TM_ROAR, Route114_EventScript_ReceivedRoar
 # 88 "data/maps/Route114/scripts.pory"
 	msgbox Route114_Text_AllMyMonDoesIsRoarTakeThis, MSGBOX_DEFAULT
 # 89 "data/maps/Route114/scripts.pory"
@@ -185,7 +185,7 @@ Route114_EventScript_RoarGentleman::
 # 90 "data/maps/Route114/scripts.pory"
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 # 91 "data/maps/Route114/scripts.pory"
-	setflag FLAG_RECEIVED_TM05
+	setflag FLAG_RECEIVED_TM_ROAR
 # 92 "data/maps/Route114/scripts.pory"
 	msgbox Route114_Text_ExplainRoar, MSGBOX_DEFAULT
 # 93 "data/maps/Route114/scripts.pory"

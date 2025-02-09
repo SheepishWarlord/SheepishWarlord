@@ -955,6 +955,7 @@ static bool32 AI_IsMoveEffectInMinus(u32 battlerAtk, u32 battlerDef, u32 move, s
                 case MOVE_EFFECT_SP_DEF_PLUS_2:
                 case MOVE_EFFECT_EVS_PLUS_2:
                 case MOVE_EFFECT_ACC_PLUS_2:
+                case MOVE_EFFECT_DEF_SPDEF_UP:
                 case MOVE_EFFECT_ALL_STATS_UP:
                     if ((gMovesInfo[move].additionalEffects[i].self && abilityAtk == ABILITY_CONTRARY)
                         || (noOfHitsToKo != 1 && !(abilityDef == ABILITY_CONTRARY && !DoesBattlerIgnoreAbilityChecks(abilityAtk, move))))

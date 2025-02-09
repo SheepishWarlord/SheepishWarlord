@@ -773,12 +773,12 @@
 #define TRAINER_CRISTIN_1                   767
 #define TRAINER_MAY_RUSTBORO_TREECKO        768
 #define TRAINER_MAY_RUSTBORO_TORCHIC        769
-#define TRAINER_ROXANNE_2                   770
-#define TRAINER_ROXANNE_3                   771
-#define TRAINER_ROXANNE_4                   772
+#define TRAINER_GRUNT_AQUA_DEWFORD_1        770
+#define TRAINER_GRUNT_AQUA_DEWFORD_2        771
+#define TRAINER_GRUNT_AQUA_DEWFORD_3        772
 #define TRAINER_ROXANNE_5                   773
 #define TRAINER_BRAWLY_2                    774
-#define TRAINER_BRAWLY_3                    775
+#define TRAINER_ALINA_DEWFORD_SHORES        775
 #define TRAINER_BRAWLY_4                    776
 #define TRAINER_BRAWLY_5                    777
 #define TRAINER_WATTSON_2                   778
@@ -863,7 +863,11 @@
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT                      855
+#define TRAINER_BRAWLY_3                    855
+#define TRAINER_ROXANNE_2                   856
+#define TRAINER_ROXANNE_3                   857
+#define TRAINER_ROXANNE_4                   858
+#define TRAINERS_COUNT                      859
 #define MAX_TRAINERS_COUNT                  864
 #define TRAINER_PARTNER(partner)           (MAX_TRAINERS_COUNT + partner)
 

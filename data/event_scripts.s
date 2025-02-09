@@ -1155,7 +1155,7 @@ EventScript_VsSeekerChargingDone::
 	
 	.include "data/maps/WoodsClearing/scripts.inc"
 
-	.include "data/maps/SpringofWisdom/scripts.inc"
+	.include "data/maps/SpringOfWisdom/scripts.inc"
 
 	.include "data/maps/DewfordShores/scripts.inc"
 

@@ -1523,6 +1523,20 @@ static bool32 AccuracyCalcHelper(u16 move)
     return FALSE;
 }
 
+static bool32 HasAttackerFaintedTarget(void)
+{
+    if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+        && !IS_MOVE_STATUS(gCurrentMove)
+        && (gLastHitBy[gBattlerTarget] == 0xFF || gLastHitBy[gBattlerTarget] == gBattlerAttacker)
+        && gBattleStruct->moveTarget[gBattlerAttacker] == gBattlerTarget
+        && gBattlerTarget != gBattlerAttacker
+        && gCurrentTurnActionNumber == GetBattlerTurnOrderNum(gBattlerAttacker)
+        && (gChosenMove == gChosenMoveByBattler[gBattlerAttacker] || gChosenMove == gBattleMons[gBattlerAttacker].moves[gChosenMovePos] || gChosenMove == GetMaxMove(gBattlerAttacker, gChosenMoveByBattler[gBattlerAttacker])))
+        return TRUE;
+    else
+        return FALSE;
+}
+
 u32 GetTotalAccuracy(u32 battlerAtk, u32 battlerDef, u32 move, u32 atkAbility, u32 defAbility, u32 atkHoldEffect, u32 defHoldEffect)
 {
     u32 calc, moveAcc;
@@ -3522,10 +3536,17 @@ void SetMoveEffect(bool32 primary, bool32 certain)
                 }
                 break;
             case MOVE_EFFECT_RECHARGE:
-                gBattleMons[gEffectBattler].status2 |= STATUS2_RECHARGE;
-                gDisableStructs[gEffectBattler].rechargeTimer = 2;
-                gLockedMoves[gEffectBattler] = gCurrentMove;
-                gBattlescriptCurrInstr++;
+                 if (gMovesInfo[gCurrentMove].effect == MOVE_EFFECT_RECHARGE
+                        && HasAttackerFaintedTarget()
+                        && !NoAliveMonsForEitherParty())
+                    {
+                    gBattleMons[gEffectBattler].status2 |= STATUS2_RECHARGE;
+                    gDisableStructs[gEffectBattler].rechargeTimer = 2;
+                    gLockedMoves[gEffectBattler] = gCurrentMove;
+                    gBattlescriptCurrInstr++;
+                    break;
+                    }
+                    else
                 break;
             case MOVE_EFFECT_RAGE:
                 gBattleMons[gBattlerAttacker].status2 |= STATUS2_RAGE;
@@ -8804,19 +8825,7 @@ static void Cmd_useitemonopponent(void)
     gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
-static bool32 HasAttackerFaintedTarget(void)
-{
-    if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
-        && !IS_MOVE_STATUS(gCurrentMove)
-        && (gLastHitBy[gBattlerTarget] == 0xFF || gLastHitBy[gBattlerTarget] == gBattlerAttacker)
-        && gBattleStruct->moveTarget[gBattlerAttacker] == gBattlerTarget
-        && gBattlerTarget != gBattlerAttacker
-        && gCurrentTurnActionNumber == GetBattlerTurnOrderNum(gBattlerAttacker)
-        && (gChosenMove == gChosenMoveByBattler[gBattlerAttacker] || gChosenMove == gBattleMons[gBattlerAttacker].moves[gChosenMovePos] || gChosenMove == GetMaxMove(gBattlerAttacker, gChosenMoveByBattler[gBattlerAttacker])))
-        return TRUE;
-    else
-        return FALSE;
-}
+
 
 bool32 CanPoisonType(u8 battlerAttacker, u8 battlerTarget)
 {

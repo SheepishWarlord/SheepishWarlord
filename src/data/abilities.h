@@ -2408,4 +2408,18 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
         .cantBeSwapped = TRUE,
         .cantBeTraced = TRUE,
     },
+
+    [ABILITY_TRICKY_AURA] =
+    {
+        .name = _("Tricky Aura"),
+        .description = COMPOUND_STRING("Field becomes weird."),
+        .aiRating = 8,
+    },
+
+    [ABILITY_POWER_SURGE] =
+    {
+        .name = _("Power Surge"),
+        .description = COMPOUND_STRING("Increases Sp. Atk Greatly."),
+        .aiRating = 8,
+    },
 };

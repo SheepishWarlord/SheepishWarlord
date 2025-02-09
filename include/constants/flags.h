@@ -54,7 +54,7 @@
 #define FLAG_FALLARBOR_GIFT    0x28 
 #define FLAG_SLATEPORT_GIFT    0x29 
 #define FLAG_ZYGARDE10_GIFT    0x2A // Unused Flag
-#define FLAG_UNUSED_0x02B    0x2B // Unused Flag
+#define FLAG_ITEM_SPRING_OF_WISDOM_GOOD_ROD    0x2B // Unused Flag
 #define FLAG_UNUSED_0x02C    0x2C // Unused Flag
 #define FLAG_UNUSED_0x02D    0x2D // Unused Flag
 #define FLAG_UNUSED_0x02E    0x2E // Unused Flag
@@ -516,8 +516,8 @@
 #define FLAG_DEFEATED_HO_OH                  0x1DC
 #define FLAG_DEFEATED_LUGIA                  0x1DD
 
-#define FLAG_UNUSED_0x1DE                    0x1DE // Unused Flag
-#define FLAG_UNUSED_0x1DF                    0x1DF // Unused Flag
+#define FLAG_WALK_THROUGH_WALLS                    0x1DE // Unused Flag
+#define FLAG_NO_WILD_ENCOUNTERS                    0x1DF // Unused Flag
 #define FLAG_UNUSED_0x1E0                    0x1E0 // Unused Flag
 #define FLAG_UNUSED_0x1E1                    0x1E1 // Unused Flag
 #define FLAG_UNUSED_0x1E2                    0x1E2 // Unused Flag
