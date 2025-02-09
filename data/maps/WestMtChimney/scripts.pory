@@ -1,0 +1,157 @@
+mapscripts WestMtChimney_MapScripts {}
+
+script AlinasMtChimneyTest1 {
+    lockall
+    applymovement(1, Common_Movement_ExclamationMark)
+    waitmovement(1)
+    applymovement(1, AlinaApproachPlayer1)
+    waitmovement(1)
+    goto(AlinaBattle2)
+}
+
+script AlinasMtChimneyTest2 {
+    lockall
+    applymovement(1, Common_Movement_ExclamationMark)
+    waitmovement(1)
+    applymovement(1, AlinaApproachPlayer2)
+    waitmovement(1)
+    goto(AlinaBattle2)
+}
+
+script AlinasMtChimneyTest3 {
+    lockall
+    applymovement(1, Common_Movement_ExclamationMark)
+    waitmovement(1)
+    applymovement(1, AlinaApproachPlayer2)
+    waitmovement(1)
+    goto(AlinaBattle2)
+}
+
+movement AlinaApproachPlayer1 {
+    walk_left
+    walk_down
+    face_left
+}
+
+movement AlinaApproachPlayer2 {
+    walk_left
+}
+
+movement AlinaApproachPlayer3 {
+    walk_left
+    walk_up
+    face_left
+}
+
+script AlinaBattle2 {
+    msgbox(format("Alina: Good, you came! Now... I'm sorry, but I have to be sure you're just as formidable as before, it's battle time!"))
+    waitmessage
+    trainerbattle_single(TRAINER_BRAWLY_4, AlinaBattle2Intro, AlinaBattle2Outro, AlinaMtChimneyTestConclusion)
+}
+
+text AlinaBattle2Intro {
+    format("Alright, for our sake, I hope you're good.")
+}
+
+text AlinaBattle2Outro {
+    format("Whew, I mean I wanna win, but having strong backup is better!")
+}
+
+script AlinaMtChimneyTestConclusion {
+    msgbox(format("Alina: Here, I'll heal your party for you after that battle"))
+    waitmessage
+    fadescreen(FADE_TO_BLACK)
+    special(HealPlayerParty)
+    fadescreen(FADE_FROM_BLACK)
+    waitmessage
+    msgbox(format("There! All healed up and ready to go! This time, Team Magma has decided to both try and explode the volcano and capture the legendary POKéMON Entei. I'm sure I don't have to explain why them accomplishing either of these would be disastrous!"))
+    waitmessage
+    msgbox(format("Now, we can go without worrying too much, don't worry there's already a nurse onsite to help us."))
+    waitmessage
+    applymovement(1, AlinaChargesForward)
+    waitmovement(1)
+    setvar(VAR_ENTEI, 1)
+    releaseall
+}
+
+movement AlinaChargesForward {
+    walk_faster_right *8
+    walk_faster_down *8
+}
+
+script TriggerEntei1 {
+    lockall
+    applymovement(OBJ_EVENT_ID_PLAYER, TriggerEntei11)
+    waitmovement(OBJ_EVENT_ID_PLAYER)
+    goto(TriggerEnteiOutside)
+}
+
+movement TriggerEntei11 {
+    walk_right
+    walk_up
+    walk_right
+}
+
+script TriggerEntei2 {
+    lockall
+    applymovement(OBJ_EVENT_ID_PLAYER, TriggerEntei21)
+    waitmovement(OBJ_EVENT_ID_PLAYER)
+    goto(TriggerEnteiOutside)
+}
+
+movement TriggerEntei21 {
+    walk_right
+    walk_right
+}
+
+script TriggerEntei3 {
+    lockall
+    applymovement(OBJ_EVENT_ID_PLAYER, TriggerEntei31)
+    waitmovement(OBJ_EVENT_ID_PLAYER)
+    goto(TriggerEnteiOutside)
+}
+
+movement TriggerEntei31 {
+    walk_right
+    walk_down
+    walk_right
+}
+
+script TriggerEnteiOutside {
+    msgbox(format("Alina: Hah! One down... a lot to go!"))
+    waitmessage
+    msgbox(format("Grunt: This is bad...at least we found Entei."))
+    waitmessage
+    applymovement(2, EnteiRuns1)
+    waitmovement(2)
+    removeobject(2)
+    applymovement(4, Common_Movement_ExclamationMark)
+    waitmovement(4)
+    applymovement(3, Common_Movement_ExclamationMark)
+    waitmovement(3)
+    msgbox(format("Ahhhh! I had to open my big mouth! Let's go!"))
+    applymovement(4, GruntsRunAway1)
+    waitmovement(4)
+    applymovement(3, GruntsRunAway2)
+    waitmovement(3)
+    msgbox(format("Alina: Hey! Get back here!"))
+    applymovement(5, GruntsRunAway2)
+    waitmovement(5)
+    setvar(VAR_ENTEI, 2)
+    releaseall
+}
+
+movement EnteiRuns1 {
+    jump_in_place_down
+    jump_2_right *4
+}
+
+movement GruntsRunAway1 {
+    walk_faster_down
+    walk_faster_right *15
+}
+
+movement GruntsRunAway2 {
+    walk_faster_right *17
+}
+

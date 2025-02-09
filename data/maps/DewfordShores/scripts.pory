@@ -1,0 +1,265 @@
+mapscripts DewfordShores_MapScripts {}
+
+script DewfordShores_EventScript_TeamAquaZapdos {
+    lockall
+    applymovement (13, TurnRight)
+    waitmovement (13)
+    applymovement (13, Common_Movement_ExclamationMark) 
+    waitmovement(13)
+    msgbox(format("(???) You! You can help! Team Aqua's going after that POKéMON! Are you ready for a fight?"), MSGBOX_YESNO)
+    if(var(VAR_RESULT) == NO){
+        goto(DewfordShores_EventScript_PlayerNotReady)}
+    else
+    {
+        goto(DewfordShores_EventScript_LetsHurry)
+    }
+}
+
+script DewfordShores_EventScript_PlayerNotReady {
+    msgbox(format("Okay, then hurry back, we have to do something!"), MSGBOX_AUTOCLOSE)
+    applymovement(OBJ_EVENT_ID_PLAYER, PlayerNotReady)
+    applymovement(13, Common_Movement_FaceOriginalDirection)
+    waitmovement (13)
+    releaseall
+}
+
+movement TurnRight {
+    face_right
+}
+
+movement PlayerNotReady {
+    walk_fast_up
+}
+
+script DewfordShores_EventScript_LetsHurry {
+    msgbox(format("Good, then let's go!"))
+    addobject(1)
+    addobject(2)
+    addobject(3)
+    addobject(4)
+    addobject(6)
+    addobject(7)
+    addobject(8)
+    addobject(9)
+    addobject(10)
+    addobject(11)
+    addobject(12)
+    waitmessage
+    applymovement(OBJ_EVENT_ID_PLAYER, ChallengeTeamAqua1)
+    applymovement(13, ChallengeTeamAquaAlina1)
+    waitmovement (13)
+    msgbox(format("You take the one over there, I'll cover this one."))
+    applymovement(12, Common_Movement_ExclamationMark)
+    applymovement(11, Common_Movement_ExclamationMark)
+    waitmovement(12)
+    waitmovement(11)
+    applymovement(12, FaceUp)
+    applymovement(11, TurnRight)
+    waitmovement (11)
+    trainerbattle_single(TRAINER_GRUNT_AQUA_DEWFORD_1, DewfordAqua1, DewfordAqua1Won, DewfordShores_EventScript_NextBattle)
+}
+
+movement FaceUp {
+    face_up
+}
+
+movement ChallengeTeamAqua1 {
+    walk_fast_down *15
+    walk_fast_right
+    face_down
+}
+
+movement ChallengeTeamAquaAlina1 {
+    walk_fast_down *14
+    face_left
+}
+
+text DewfordAqua1 {
+    format("You have some nerve tryna mess with our plans!")
+}
+
+text DewfordAqua1Won {
+    "Now my friends here can finish you off!"
+}
+
+script DewfordShores_EventScript_NextBattle {
+    msgbox(format("(???) We beat these two, onto the next!"))
+    applymovement(OBJ_EVENT_ID_PLAYER, ChallengeTeamAqua2)
+    applymovement(13, ChallengeTeamAquaAlina2)
+    waitmovement (OBJ_EVENT_ID_PLAYER)
+    applymovement(1, FaceUp)
+    applymovement(3, FaceUp)
+    multi_fixed_2_vs_2(TRAINER_GRUNT_AQUA_DEWFORD_2, NotYouToo, TRAINER_GRUNT_AQUA_DEWFORD_3, Rats, TRAINER_ALINA_DEWFORD_SHORES)
+    goto(DewfordShores_EventScript_BrawlyHelps)
+}
+
+movement ChallengeTeamAqua2 {
+    walk_fast_up *3
+    walk_fast_left *4
+    face_down
+}
+
+movement ChallengeTeamAquaAlina2 {
+    walk_faster_up *2
+    walk_faster_left *3
+    face_down
+}
+
+text NotYouToo {
+    "Don't tell me I lost too..."
+}
+
+text Rats {
+    "Rats, I lost..."
+}
+
+script DewfordShores_EventScript_BrawlyHelps {
+    msgbox(("Hold it!"), MSGBOX_AUTOCLOSE)
+    addobject(14)
+    addobject(15)
+    applymovement(14, BrawlyHelp)
+    applymovement(15, WinonasHereToo)
+    waitmovement (15)
+    msgbox(format("(Brawly) I saw the storm and called some backup, I was not expecting to see two children rushing into battle"))
+    msgbox(format("(Winona) The winds may take you where they go, but you must be careful"))
+    if(flag(FLAG_BADGE02_GET)){
+        goto(YouHaveBadge)
+    }
+    else{
+        msgbox(format("(Brawly) I don't know who you are, but with that strength, you should challenge my gym!"))
+        msgbox("(Winona) Cool it, Brawly")
+    }
+    msgbox(format("(Brawly) Regardless, I expected more from you Alina. But then again, it may be time you challenge my gym."))
+    msgbox("The rest of you...")
+    msgbox(format("SCRAM! Surely you can't think you're strong enough to defeat two gym leaders!"))
+    waitmessage
+    fadescreen(FADE_TO_BLACK)
+    removeobject(1)
+    removeobject(2)
+    removeobject(3)
+    removeobject(4)
+    removeobject(6)
+    removeobject(7)
+    removeobject(8)
+    removeobject(9)
+    removeobject(10)
+    removeobject(11)
+    removeobject(12)
+    fadescreen(FADE_FROM_BLACK)
+    msgbox(format("There, I think our work is done, thanks Winona!"))
+    msgbox(format("(Winona) Zapdos still suffers, we should leave this place..."))
+    applymovement(15, BrawlyandWinonaLeave)
+    applymovement(14, BrawlyandWinonaLeave)
+    waitmovement (14)
+    removeobject(14)
+    removeobject(15)
+    msgbox(format("(???) Thank goodness they came when they did, I wasn't sure how many more I could battle! Oh! By the way, I'm Alina, I'm from Dewford."))
+    msgbox(format("(Alina) Wait a second...I'll be right back"))
+    waitmessage
+    fadescreen(FADE_TO_BLACK)
+    setvar(VAR_DEWFORD_SHORES, 1)
+    setflag(FLAG_DEWFORD_SHORES_EVENT)
+    fadescreen(FADE_FROM_BLACK)
+    msgbox(format("So, now that that's all over, wanna battle me?"), MSGBOX_YESNO)
+    if(var(VAR_RESULT) == NO){
+        goto(DewfordShores_EventScript_AlinaWantsToBattle3)
+        }
+    else{
+        trainerbattle_single(TRAINER_ALINA_DEWFORD_SHORES, ImGonnaWin, YouReallyAreStrong)}
+}
+
+movement BrawlyHelp {
+    walk_faster_left *16
+    walk_faster_down *6
+}
+
+movement WinonasHereToo {
+    walk_faster_left *16
+    walk_faster_down *6
+}
+
+movement BrawlyandWinonaLeave {
+    walk_right *3
+    walk_up *10
+}
+
+script DewfordShores_EventScript_AlinaWantsToBattle {
+    lockall
+    msgbox(format("So, have you changed your mind?"), MSGBOX_YESNO)
+    if(var(VAR_RESULT) == NO){
+        goto(DewfordShores_EventScript_AlinaWantsToBattle2)
+        }
+    else{    
+        trainerbattle_single(TRAINER_ALINA_DEWFORD_SHORES, ImGonnaWin, YouReallyAreStrong)}
+}
+
+text ImGonnaWin {
+    "I'm gonna win this!"
+}
+
+text YouReallyAreStrong {
+    format("You really are strong! No wonder you beat those grunts!")
+}
+
+script NULL {}
+
+script DewfordShores_EventScript_AlinaWantsToBattle2{
+    msgbox(format("Alright, I'll still be here!"))
+    releaseall
+}
+
+script YouHaveBadge {
+    msgbox("(Brawly) I know you got my badge, but that doesn't mean run into trouble!")
+    return
+}
+
+script DewfordShores_EventScript_AlinaWantsToBattle3 {
+    msgbox(format("Okay, but I'll be here if you change your mind"))
+    releaseall
+}
+
+script ZapdosBattle {
+    lockall
+    msgbox(format("CAWWW"))
+    playmoncry(SPECIES_ZAPDOS, CRY_MODE_ENCOUNTER)
+            waitmessage
+        waitmoncry
+        setwildbattle(SPECIES_ZAPDOS, 50, ITEM_NONE)
+        dowildbattle
+        specialvar(VAR_RESULT, GetBattleOutcome)
+        if(var(VAR_RESULT) == B_OUTCOME_CAUGHT){
+            call(Won_or_Caught2)
+        }
+        elif(var(VAR_RESULT) == B_OUTCOME_WON){
+            call(Won_or_Caught2)
+        }
+        elif(var(VAR_RESULT) == B_OUTCOME_RAN){
+            call(RanAway2)
+        }
+        elif(var(VAR_RESULT) == B_OUTCOME_PLAYER_TELEPORTED){
+            call(RanAway2)
+        }
+        waitmessage
+        releaseall
+
+}
+
+script Won_or_Caught2 {
+    fadescreen(FADE_TO_BLACK)
+    removeobject(5)
+    setflag(FLAG_ZAPDOS)
+    fadescreen(FADE_FROM_BLACK)
+    return
+}
+
+script RanAway2 {
+    playmoncry(SPECIES_ZAPDOS, CRY_MODE_ENCOUNTER)
+    msgbox("...", MSGBOX_AUTOCLOSE)
+    waitmessage
+    waitmoncry
+    fadescreen(FADE_TO_BLACK)
+    setflag(FLAG_ZAPDOS)
+    removeobject(5)
+    fadescreen(FADE_FROM_BLACK)
+    return
+}

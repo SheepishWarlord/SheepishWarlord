@@ -1,0 +1,103 @@
+{
+  "id": "MAP_SECLUDED_RIVER",
+  "name": "SecludedRiver",
+  "layout": "LAYOUT_SECLUDED_RIVER",
+  "music": "MUS_ABANDONED_SHIP",
+  "region_map_section": "MAPSEC_SECLUDED_RIVER",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": true,
+  "allow_escaping": true,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_ROUTE103",
+      "offset": -12,
+      "direction": "down"
+    },
+    {
+      "map": "MAP_VERDANTURF_TOWN",
+      "offset": 34,
+      "direction": "up"
+    }
+  ],
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_VAR_3",
+      "x": 22,
+      "y": 45,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "FLAG_HIDE_ROUTE_110_RIVAL_ON_BIKE"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_VAR_0",
+      "x": 22,
+      "y": 45,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "FLAG_HIDE_ROUTE_110_RIVAL"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SUICUNE)",
+      "x": 20,
+      "y": 62,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 3,
+      "movement_range_y": 3,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "SecludedRiver_EventScript_SuicuneBattle",
+      "flag": "FLAG_SUICUNE"
+    }
+  ],
+  "warp_events": [
+
+  ],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 24,
+      "y": 46,
+      "elevation": 0,
+      "var": "VAR_ROUTE110_STATE",
+      "var_value": "0",
+      "script": "Route110_EventScript_RivalTrigger1"
+    },
+    {
+      "type": "trigger",
+      "x": 24,
+      "y": 45,
+      "elevation": 0,
+      "var": "VAR_ROUTE110_STATE",
+      "var_value": "0",
+      "script": "Route110_EventScript_RivalTrigger2"
+    },
+    {
+      "type": "trigger",
+      "x": 24,
+      "y": 44,
+      "elevation": 0,
+      "var": "VAR_ROUTE110_STATE",
+      "var_value": "0",
+      "script": "Route110_EventScript_RivalTrigger3"
+    }
+  ],
+  "bg_events": [
+
+  ]
+}

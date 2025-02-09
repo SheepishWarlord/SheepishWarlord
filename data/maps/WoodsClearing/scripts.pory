@@ -1,0 +1,63 @@
+mapscripts WoodsClearing_MapScripts {}
+
+const SHAYMIN = 1
+
+script WoodsClearing_EventScript_ShayminBattle {
+        lockall
+        msgbox(format("Shayminmin!"))
+        playmoncry(SPECIES_SHAYMIN, CRY_MODE_ENCOUNTER)
+        waitmessage
+        waitmoncry
+        setwildbattle(SPECIES_SHAYMIN, 40, ITEM_NONE)
+        dowildbattle
+        specialvar(VAR_RESULT, GetBattleOutcome)
+        if(var(VAR_RESULT) == B_OUTCOME_CAUGHT){
+            call(Won_or_Caught0)
+        }
+        elif(var(VAR_RESULT) == B_OUTCOME_WON){
+            call(Won_or_Caught0)
+        }
+        elif(var(VAR_RESULT) == B_OUTCOME_RAN){
+            call(RanAway0)
+        }
+        elif(var(VAR_RESULT) == B_OUTCOME_PLAYER_TELEPORTED){
+            call(RanAway0)
+        }
+        waitmessage
+        releaseall
+
+}
+
+script Won_or_Caught0 {
+    fadescreen(FADE_TO_BLACK)
+    removeobject(1)
+    setvar(VAR_SHAYMIN, 2)
+    fadescreen(FADE_FROM_BLACK)
+    return
+}
+
+script RanAway0 {
+    playmoncry(SPECIES_SHAYMIN, CRY_MODE_ENCOUNTER)
+    msgbox("kew", MSGBOX_AUTOCLOSE)
+    waitmessage
+    waitmoncry
+    fadescreen(FADE_TO_BLACK)
+    setvar(VAR_SHAYMIN, 3)
+    removeobject(1)
+    fadescreen(FADE_FROM_BLACK)
+    return
+}
+
+script SHAYMIN {
+    lockall
+    if (flag(FLAG_BADGE03_GET) == TRUE) {
+        setvar(VAR_SHAYMIN, 1)
+        msgbox(format("kew"), MSGBOX_AUTOCLOSE)
+        playmoncry(SPECIES_SHAYMIN, CRY_MODE_ENCOUNTER)
+
+    }
+    else{
+    setflag(FLAG_TEMP_1)
+    }
+    releaseall
+}

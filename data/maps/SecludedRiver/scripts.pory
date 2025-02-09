@@ -1,0 +1,335 @@
+const SUICUNE = 3
+
+script SecludedRiver_EventScript_SuicuneBattle {
+        lockall
+        msgbox(format("Suiui"))
+        playmoncry(SPECIES_SUICUNE, CRY_MODE_ENCOUNTER)
+        waitmessage
+        waitmoncry
+        setwildbattle(SPECIES_SUICUNE, 60, ITEM_NONE)
+        dowildbattle
+        specialvar(VAR_RESULT, GetBattleOutcome)
+        if(var(VAR_RESULT) == B_OUTCOME_CAUGHT){
+            call(Won_or_caught4)
+        }
+        elif(var(VAR_RESULT) == B_OUTCOME_WON){
+            call(Won_or_caught4)
+        }
+        elif(var(VAR_RESULT) == B_OUTCOME_RAN){
+            call(Ranaway4)
+        }
+        elif(var(VAR_RESULT) == B_OUTCOME_PLAYER_TELEPORTED){
+            call(Ranaway4)
+        }
+        waitmessage
+        releaseall
+
+}
+
+script Won_or_caught4 {
+    fadescreen(FADE_TO_BLACK)
+    removeobject(3)
+    setflag(FLAG_SUICUNE)
+    fadescreen(FADE_FROM_BLACK)
+    return
+}
+
+script Ranaway4 {
+    playmoncry(SPECIES_SUICUNE, CRY_MODE_ENCOUNTER)
+    msgbox("cune...", MSGBOX_AUTOCLOSE)
+    waitmessage
+    waitmoncry
+    fadescreen(FADE_TO_BLACK)
+    setflag(FLAG_SUICUNE)
+    removeobject(3)
+    fadescreen(FADE_FROM_BLACK)
+    return
+}
+
+const LOCALID_RIVAL = 2
+const LOCALID_RIVAL_ON_BIKE = 1
+
+
+raw `
+SecludedRiver_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SecludedRiver_OnTransition
+	.byte 0
+
+SecludedRiver_OnTransition:
+	call Common_EventScript_SetupRivalGfxId
+	call Common_EventScript_SetupRivalOnBikeGfxId
+	end
+
+.set LOCALID_RIVAL, 2
+.set LOCALID_RIVAL_ON_BIKE, 1
+
+SecludedRiver_EventScript_RivalTrigger1::
+	setvar VAR_0x8008, 1
+	goto SecludedRiver_EventScript_RivalScene
+	end
+
+SecludedRiver_EventScript_RivalTrigger2::
+	setvar VAR_0x8008, 2
+	goto SecludedRiver_EventScript_RivalScene
+	end
+
+SecludedRiver_EventScript_RivalTrigger3::
+	setvar VAR_0x8008, 3
+	goto SecludedRiver_EventScript_RivalScene
+	end
+
+SecludedRiver_EventScript_RivalScene::
+	lockall
+	checkplayergender
+	call_if_eq VAR_RESULT, MALE, SecludedRiver_EventScript_PlayMayMusic
+	call_if_eq VAR_RESULT, FEMALE, SecludedRiver_EventScript_PlayBrendanMusic
+	applymovement LOCALID_RIVAL, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	applymovement LOCALID_RIVAL, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_RIVAL, Common_Movement_Delay48
+	waitmovement 0
+	delay 30
+	call_if_eq VAR_0x8008, 1, SecludedRiver_EventScript_RivalApproachPlayer1
+	call_if_eq VAR_0x8008, 2, SecludedRiver_EventScript_RivalApproachPlayer2
+	call_if_eq VAR_0x8008, 3, SecludedRiver_EventScript_RivalApproachPlayer3
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, SecludedRiver_EventScript_MayBattle
+	goto_if_eq VAR_RESULT, FEMALE, SecludedRiver_EventScript_BrendanBattle
+	releaseall
+	end
+
+SecludedRiver_EventScript_PlayMayMusic::
+	playbgm MUS_ENCOUNTER_MAY, TRUE
+	return
+
+SecludedRiver_EventScript_PlayBrendanMusic::
+	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
+	return
+
+SecludedRiver_EventScript_MayBattle::
+	msgbox SecludedRiver_Text_MayLetsBattle, MSGBOX_DEFAULT
+	switch VAR_STARTER_MON
+	case 0, SecludedRiver_EventScript_MayBattleTreecko
+	case 1, SecludedRiver_EventScript_MayBattleTorchic
+	case 2, SecludedRiver_EventScript_MayBattleMudkip
+	end
+
+SecludedRiver_EventScript_MayBattleTreecko::
+	trainerbattle_no_intro TRAINER_MAY_ROUTE_110_TREECKO, SecludedRiver_Text_MayDefeated
+	goto SecludedRiver_EventScript_MayDefeated
+	end
+
+SecludedRiver_EventScript_MayBattleTorchic::
+	trainerbattle_no_intro TRAINER_MAY_ROUTE_110_TORCHIC, SecludedRiver_Text_MayDefeated
+	goto SecludedRiver_EventScript_MayDefeated
+	end
+
+SecludedRiver_EventScript_MayBattleMudkip::
+	trainerbattle_no_intro TRAINER_MAY_ROUTE_110_MUDKIP, SecludedRiver_Text_MayDefeated
+	goto SecludedRiver_EventScript_MayDefeated
+	end
+
+SecludedRiver_EventScript_MayDefeated::
+	msgbox SecludedRiver_Text_MayTakeThis, MSGBOX_DEFAULT
+	call SecludedRiver_EventScript_GiveItemfinder
+	msgbox SecludedRiver_Text_MayExplainItemfinder, MSGBOX_DEFAULT
+	goto SecludedRiver_EventScript_RivalExit
+	end
+
+SecludedRiver_EventScript_BrendanBattle::
+	msgbox SecludedRiver_Text_BrendanLetsBattle, MSGBOX_DEFAULT
+	switch VAR_STARTER_MON
+	case 0, SecludedRiver_EventScript_BrendanBattleTreecko
+	case 1, SecludedRiver_EventScript_BrendanBattleTorchic
+	case 2, SecludedRiver_EventScript_BrendanBattleMudkip
+	end
+
+SecludedRiver_EventScript_BrendanBattleTreecko::
+	trainerbattle_no_intro TRAINER_BRENDAN_ROUTE_110_TREECKO, SecludedRiver_Text_BrendanDefeated
+	goto SecludedRiver_EventScript_BrendanDefeated
+	end
+
+SecludedRiver_EventScript_BrendanBattleTorchic::
+	trainerbattle_no_intro TRAINER_BRENDAN_ROUTE_110_TORCHIC, SecludedRiver_Text_BrendanDefeated
+	goto SecludedRiver_EventScript_BrendanDefeated
+	end
+
+SecludedRiver_EventScript_BrendanBattleMudkip::
+	trainerbattle_no_intro TRAINER_BRENDAN_ROUTE_110_MUDKIP, SecludedRiver_Text_BrendanDefeated
+	goto SecludedRiver_EventScript_BrendanDefeated
+	end
+
+SecludedRiver_EventScript_BrendanDefeated::
+	msgbox SecludedRiver_Text_BrendanTakeThis, MSGBOX_DEFAULT
+	call SecludedRiver_EventScript_GiveItemfinder
+	msgbox SecludedRiver_Text_BrendanExplainItemfinder, MSGBOX_DEFAULT
+	goto SecludedRiver_EventScript_RivalExit
+	end
+
+SecludedRiver_EventScript_GiveItemfinder::
+	giveitem ITEM_DOWSING_MACHINE
+	return
+
+SecludedRiver_EventScript_RivalExit::
+	closemessage
+	call_if_eq VAR_0x8008, 1, SecludedRiver_EventScript_MoveRival1
+	call_if_eq VAR_0x8008, 2, SecludedRiver_EventScript_MoveRival2
+	call_if_eq VAR_0x8008, 3, SecludedRiver_EventScript_MoveRival3
+	setobjectmovementtype LOCALID_RIVAL, MOVEMENT_TYPE_FACE_RIGHT
+	setobjectmovementtype LOCALID_RIVAL_ON_BIKE, MOVEMENT_TYPE_FACE_RIGHT
+	removeobject LOCALID_RIVAL
+	addobject LOCALID_RIVAL_ON_BIKE
+	delay 45
+	call_if_eq VAR_0x8008, 1, SecludedRiver_EventScript_RivalExit1
+	call_if_eq VAR_0x8008, 2, SecludedRiver_EventScript_RivalExit2
+	call_if_eq VAR_0x8008, 3, SecludedRiver_EventScript_RivalExit3
+	removeobject LOCALID_RIVAL_ON_BIKE
+	setvar VAR_ROUTE110_STATE, 1
+	savebgm MUS_DUMMY
+	fadedefaultbgm
+	releaseall
+	end
+
+SecludedRiver_EventScript_RivalApproachPlayer1::
+	applymovement LOCALID_RIVAL, SecludedRiver_Movement_RivalApproachPlayer1
+	waitmovement 0
+	return
+
+SecludedRiver_EventScript_RivalApproachPlayer2::
+	applymovement LOCALID_RIVAL, SecludedRiver_Movement_RivalApproachPlayer2
+	waitmovement 0
+	return
+
+SecludedRiver_EventScript_RivalApproachPlayer3::
+	applymovement LOCALID_RIVAL, SecludedRiver_Movement_RivalApproachPlayer3
+	waitmovement 0
+	return
+
+SecludedRiver_EventScript_RivalExit1::
+	applymovement LOCALID_RIVAL_ON_BIKE, SecludedRiver_Movement_RivalExit1
+	waitmovement 0
+	return
+
+SecludedRiver_EventScript_RivalExit2::
+	applymovement LOCALID_RIVAL_ON_BIKE, SecludedRiver_Movement_RivalExit2
+	waitmovement 0
+	return
+
+SecludedRiver_EventScript_RivalExit3::
+	applymovement LOCALID_RIVAL_ON_BIKE, SecludedRiver_Movement_RivalExit3
+	waitmovement 0
+	return
+
+SecludedRiver_EventScript_MoveRival1::
+	setobjectxyperm LOCALID_RIVAL_ON_BIKE, 23, 46
+	return
+
+SecludedRiver_EventScript_MoveRival2::
+	setobjectxyperm LOCALID_RIVAL_ON_BIKE, 23, 45
+	return
+
+SecludedRiver_EventScript_MoveRival3::
+	setobjectxyperm LOCALID_RIVAL_ON_BIKE, 25, 44
+	return
+
+SecludedRiver_Movement_RivalApproachPlayer1:
+	walk_right
+	walk_down
+	walk_in_place_faster_right
+	step_end
+
+SecludedRiver_Movement_RivalApproachPlayer2:
+	walk_right
+	step_end
+
+SecludedRiver_Movement_RivalApproachPlayer3:
+	walk_right
+	walk_up
+	walk_in_place_faster_right
+	step_end
+
+SecludedRiver_Movement_RivalExit1:
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	step_end
+
+SecludedRiver_Movement_RivalExit2:
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_right
+	step_end
+
+SecludedRiver_Movement_RivalExit3:
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	step_end
+
+SecludedRiver_Text_MayLetsBattle:
+	.string "MAY: Hi, {PLAYER}{KUN}, long time no see!\p"
+	.string "While I was searching for other\n"
+	.string "POKéMON, my POKéMON grew stronger.\p"
+	.string "So…\n"
+	.string "How about a little battle?$"
+
+SecludedRiver_Text_MayDefeated:
+	.string "Yikes!\n"
+	.string "You're better than I expected!$"
+
+SecludedRiver_Text_MayTakeThis:
+	.string "MAY: {PLAYER}{KUN}, you've been busy\n"
+	.string "training, too, haven't you?\p"
+	.string "I think you deserve a reward!\n"
+	.string "This is from me!$"
+
+SecludedRiver_Text_MayExplainItemfinder:
+	.string "MAY: That's an ITEMFINDER.\p"
+	.string "Try it out. If there is an item that's\n"
+	.string "not visible, it emits a sound.\p"
+	.string "Okay, {PLAYER}{KUN}, let's meet again!\p"
+	.string "I know it's a little silly coming from\n"
+	.string "me, but I think you should train a lot\l"
+	.string "harder for the next time.$"
+
+SecludedRiver_Text_BrendanLetsBattle:
+	.string "BRENDAN: Hey, {PLAYER}.\n"
+	.string "So this is where you were.\l"
+	.string "How's it going?\p"
+	.string "Have you been raising your POKéMON?\n"
+	.string "I'll check for you.$"
+
+SecludedRiver_Text_BrendanDefeated:
+	.string "Hmm…\n"
+	.string "You're pretty good.$"
+
+SecludedRiver_Text_BrendanTakeThis:
+	.string "BRENDAN: {PLAYER}, you've trained\n"
+	.string "without me noticing…\p"
+	.string "Good enough!\n"
+	.string "Here, take this.$"
+
+SecludedRiver_Text_BrendanExplainItemfinder:
+	.string "BRENDAN: That's an ITEMFINDER.\p"
+	.string "Use it to root around for items that\n"
+	.string "aren't visible.\p"
+	.string "If it senses something, it emits\n"
+	.string "a sound.\p"
+	.string "Anyway, I'm off to look for new\n"
+	.string "POKéMON.$"
+
+`

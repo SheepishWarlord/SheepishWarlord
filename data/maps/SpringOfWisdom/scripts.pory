@@ -1,0 +1,70 @@
+mapscripts SpringOfWisdom_MapScripts {
+    MAP_SCRIPT_ON_TRANSITION: SpringOfWisdom_EventScript_CheckUxieSpawn
+}
+
+script SpringOfWisdom_EventScript_CheckUxieSpawn {
+    if(flag(FLAG_BADGE06_GET && !FLAG_UXIE_CAUGHT)){
+        clearflag(FLAG_UXIE_SPAWN)
+        lockall
+        addobject(1)
+        msgbox("Kyuun", MSGBOX_AUTOCLOSE)
+        playmoncry(SPECIES_UXIE, CRY_MODE_ENCOUNTER)
+        waitmessage
+        waitmoncry
+        releaseall
+    }
+    else {
+        setflag(FLAG_UXIE_SPAWN)
+    }
+
+}
+
+script SpringOfWisdom_EventScript_UxieBattle {
+    lockall
+    playmoncry(SPECIES_UXIE, CRY_MODE_ENCOUNTER)
+    msgbox("Kyuuuuuun")
+    waitmessage
+    waitmoncry
+    setwildbattle(SPECIES_UXIE, 50, ITEM_NONE)
+    dowildbattle
+    specialvar(VAR_RESULT, GetBattleOutcome)
+    if(var(VAR_RESULT) == B_OUTCOME_CAUGHT){
+        call(Won_or_Caught)
+    }
+    elif(var(VAR_RESULT) == B_OUTCOME_WON){
+        call(Won_or_Caught)
+    }
+    elif(var(VAR_RESULT) == B_OUTCOME_RAN){
+        call(RanAway)
+    }
+    elif(var(VAR_RESULT) == B_OUTCOME_PLAYER_TELEPORTED){
+        call(RanAway)
+    }
+    waitmessage
+    releaseall
+}
+
+script Won_or_Caught {
+    fadescreen(FADE_TO_BLACK)
+    removeobject(1)
+    setflag(FLAG_UXIE_CAUGHT)
+    fadescreen(FADE_FROM_BLACK)
+    return
+}
+
+script RanAway {
+    playmoncry(SPECIES_UXIE, CRY_MODE_ENCOUNTER)
+    msgbox("kyuun", MSGBOX_AUTOCLOSE)
+    waitmessage
+    waitmoncry
+    fadescreen(FADE_TO_BLACK)
+    removeobject(1)
+    fadescreen(FADE_FROM_BLACK)
+    return
+}
+
+script GoodRod {
+    giveitem(ITEM_GOOD_ROD)
+    playfanfare(MUS_OBTAIN_ITEM)
+    
+}

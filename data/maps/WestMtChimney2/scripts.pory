@@ -1,0 +1,496 @@
+mapscripts WestMtChimney2_MapScripts {
+    MAP_SCRIPT_ON_LOAD: SpawnEntei
+}
+
+script SpawnEntei {
+    if(var(VAR_ENTEI) == 2)
+    {
+        clearflag(FLAG_TEMP_1)
+        setflag(FLAG_TEMP_3)
+        addobject(1)
+    }
+    else 
+    {
+        if(var(VAR_ENTEI) == 10) 
+        {
+            clearflag(FLAG_TEMP_2)
+            setflag(FLAG_TEMP_1)
+            setflag(FLAG_TEMP_3)
+            setflag(FLAG_TEMP_4)
+            setflag(FLAG_TEMP_5)
+            addobject(5)
+        }
+        else 
+        {
+            setflag(FLAG_TEMP_1)
+            setflag(FLAG_TEMP_2)
+            setflag(FLAG_TEMP_3)
+            setflag(FLAG_TEMP_4)
+            setflag(FLAG_TEMP_5)
+        }
+    }
+}
+
+const COURTNEY = 4
+const ENTEI1 = 1
+const ENTEI2 = 5
+const ALINA = 16
+const COURTNEY2 = 19
+
+
+script ScareEntei1 {
+    lockall
+    applymovement(OBJ_EVENT_ID_PLAYER, WalkRight)
+    waitmovement(OBJ_EVENT_ID_PLAYER)
+    delay(30)
+    applymovement(1, ScareEntei1a)
+    waitmovement(1)
+    msgbox(format("Alina: Cool! You got it to flee. Wait... should we really feel good about scaring it? Anyway, Team Magma is vicious, and the further up the mountain it goes, the more difficult for them to trap it!"))
+    waitmessage
+    msgbox(format("Courtney: Will you little bugs stop messing with out plans? You do know we are bettering Hoenn if we complete our quest, right?"))
+    waitmessage
+    msgbox(format("Regardless, up the mountain I go. I was supposed to be on the ground team..."))
+    waitmessage
+    applymovement(4, CourtneyChasesEntei1)
+    waitmovement(4)
+    applymovement(16, AlinaBeatsGrunt2)
+    waitmovement(ALINA)
+    msgbox(format("Alina: Nice! Two down, still so many more to go!"))
+    waitmessage
+    applymovement(ALINA, AlinaApproachPlayer4)
+    waitmovement(ALINA)
+    msgbox(format("I've gotta finish a few things here and get healed up. I think Roxanne and Norman are on this side of the mountain. I dunno who's on the other side, presumably some other helpful people!"))
+    waitmessage
+    applymovement(ALINA, BackToFightingAlina)
+    waitmovement(ALINA)
+    msgbox(format("Nonetheless, I'll catch up with you later, for now, you'd better chase down Entei and Courtney."))
+    waitmessage
+    setvar(VAR_ENTEI, 3)
+    removeobject(ENTEI1)
+    addobject(22)
+    releaseall
+}
+
+movement WalkRight {
+    walk_right *2
+}
+
+movement ScareEntei1a {
+    emote_exclamation_mark
+    jump_2_up *5
+    jump_right *5
+    face_down
+}
+
+movement CourtneyChasesEntei1 {
+    walk_right
+    walk_down *3
+    walk_right *3
+    walk_up *11
+    walk_left *3
+    face_up
+}
+
+movement AlinaBeatsGrunt2 {
+    walk_in_place_fast_right *4
+}
+
+movement AlinaApproachPlayer4 {
+    face_left
+}
+
+movement BackToFightingAlina {
+    face_right
+}
+
+script AlinaWMtChimneyDialogue1 {
+    lockall
+    faceplayer
+    msgbox(format("I know you're trying to help, nut don't distract me."))
+    waitmessage
+    applymovement(ALINA, FaceRight)
+    releaseall
+}
+
+movement FaceRight {
+    face_right
+}
+
+script TeamMagmaWMtChimneyDialogue1 {
+    lockall
+    msgbox(format("Could you not distract me, I'm tryyying to find a way to pummel your friend with my fainted party."))
+    waitmessage
+    releaseall
+}
+
+script NurseMtChimney{
+    lockall
+    faceplayer
+    msgbox(format("Whew, you all are doing some tough work! I'm happy to stay back and play support. Let me fix up your team."))
+    waitmessage
+    fadescreen(FADE_TO_BLACK)
+    special(HealPlayerParty)
+    fadescreen(FADE_FROM_BLACK)
+    msgbox(format("There, now you can get back to... doing your thing or whatever."))
+    waitmessage
+    releaseall
+}
+
+script DontTurnBack {
+    lockall
+    msgbox(format("I can't turn back now! I have to finish this!"))
+    waitmessage
+    applymovement(OBJ_EVENT_ID_PLAYER, WalkRight)
+    waitmovement(OBJ_EVENT_ID_PLAYER)
+    releaseall
+}
+
+script ScareEntei2Setup1 {
+    lockall
+    applymovement(OBJ_EVENT_ID_PLAYER, ScareEntei2Setup1a)
+    waitmovement(OBJ_EVENT_ID_PLAYER)
+    goto(ScareEntei2)
+}
+
+movement ScareEntei2Setup1a {
+    walk_up *2
+}
+
+script ScareEntei2Setup2 {
+    lockall
+    applymovement(OBJ_EVENT_ID_PLAYER, ScareEntei2Setup2a)
+    waitmovement(OBJ_EVENT_ID_PLAYER)
+    goto(ScareEntei2)
+}
+
+movement ScareEntei2Setup2a {
+    walk_left*2
+    walk_up *2
+}
+
+script ScareEntei2Setup3 {
+    lockall
+    applymovement(OBJ_EVENT_ID_PLAYER, ScareEntei2Setup3a)
+    waitmovement(OBJ_EVENT_ID_PLAYER)
+    goto(ScareEntei2)
+}
+
+movement ScareEntei2Setup3a {
+    walk_left*3
+    walk_up *2
+}
+
+script ScareEntei2Setup4 {
+    lockall
+    applymovement(OBJ_EVENT_ID_PLAYER, ScareEntei2Setup4a)
+    waitmovement(OBJ_EVENT_ID_PLAYER)
+    goto(ScareEntei2)
+}
+
+movement ScareEntei2Setup4a {
+    walk_left*4
+    walk_up *2
+}
+
+script ScareEntei2Setup5 {
+    lockall
+    applymovement(OBJ_EVENT_ID_PLAYER, ScareEntei2Setup5a)
+    waitmovement(OBJ_EVENT_ID_PLAYER)
+    goto(ScareEntei2)
+}
+
+movement ScareEntei2Setup5a {
+    walk_left*5
+    walk_up *2
+}
+
+script ScareEntei2 {
+    lockall
+    applymovement(17, RoxannesBattling)
+    waitmovement(17)
+    msgbox(format("Roxanne: Hey, I remember you, {PLAYER}, right? I'm a little busy with this one right now, could you handle that?"))
+    waitmessage
+    delay(30)
+    applymovement(22, ScareEntei2a)
+    waitmovement(22)
+    removeobject(22)
+    addobject(20)
+    clearflag(FLAG_TEMP_3)
+    applymovement(COURTNEY, FaceDown)
+    waitmovement(COURTNEY)
+    msgbox(format("Why is that thing so scared of you specifically? We had it almost cornered down the mountain, then you showed up! I swear, if I climb this mountain more and you scare it away again..."))
+    waitmessage
+    applymovement(COURTNEY, CourtneyChasesEntei2)
+    waitmovement(COURTNEY)
+    removeobject(COURTNEY)
+    addobject(COURTNEY2)
+    setvar(VAR_ENTEI, 4)
+    releaseall
+}
+
+movement RoxannesBattling {
+    walk_in_place_left *4
+}
+
+movement ScareEntei2a {
+    emote_exclamation_mark
+    jump_2_right *7
+    jump_down *5
+}
+
+movement FaceDown {
+    face_down
+}
+
+movement CourtneyChasesEntei2 {
+    walk_up
+    walk_right *2
+    walk_up *6
+    walk_faster_right *4
+    walk_fast_down *6
+    walk_fast_right 
+    walk_fast_down *10
+    walk_fast_right *7
+    walk_faster_up *4
+}
+
+script RoxanneWMtChimneyDialogue {
+    lockall
+    msgbox(format("Why is this guy so tough?"))
+    waitmessage
+    releaseall
+}
+
+script TeamMagmaWMtChimneyDialogue2 {
+    lockall
+    msgbox(format("Hmmph, I'm soo tough!"))
+    waitmessage
+    releaseall
+}
+
+script TeamMagmaWMtChimneyDialogue3 {
+    lockall
+    msgbox(format("Wow, kid, you're really playing with fire, metaphorically and literally."))
+    waitmessage
+    releaseall
+}
+
+script TeamMagmaWMtChimneyDialogue4 {
+    lockall
+    msgbox(format("Wow, Courtney must really be feeling nice today, normally she'd smoke you after messing with her once or twice. Maybe she's more tolerant to failed plans than to whoopie cushions?"))
+    waitmessage
+    releaseall
+}
+
+script ScareEntei3 {
+    lockall
+    applymovement(OBJ_EVENT_ID_PLAYER, WalkUp)
+    delay(30)
+    applymovement(20, ScareEntei3a)
+    waitmovement(20)
+    removeobject(20)
+    setflag(FLAG_TEMP_3)
+    applymovement(COURTNEY2, FaceDown)
+    waitmovement(COURTNEY2)
+    msgbox(format("Courtney: AGAIN?! NOT ONLY DO YOU KEEP SCARING ENTEI AWAY, YOU KEEP MAKING ME AND MY TEAM CLIMB THIS DUMB MOUNTAIN. MESS WITH US ONE MORE TIME, I DARE YOU!"))
+    waitmessage
+    applymovement(COURTNEY2, CourtneyChasesEntei3)
+    waitmovement(COURTNEY2)
+    removeobject(COURTNEY2)
+    addobject(23)
+    clearflag(23)
+    setvar(VAR_ENTEI, 5)
+    releaseall
+}
+
+movement WalkUp {
+    walk_up
+}
+
+movement ScareEntei3a {
+    emote_exclamation_mark
+    jump_2_up *5
+}
+
+movement CourtneyChasesEntei3 {
+    walk_fast_right
+    walk_fast_up *5
+    walk_faster_left
+    walk_faster_up *16
+    walk_faster_right *4
+    face_left
+}
+
+script HelpMePlayer {
+    lockall
+    faceplayer
+    msgbox(format("These grunts won't let me through!"))
+    applymovement(18, FaceUp)
+    releaseall
+}
+
+script MultiWithNorman {
+    lockall
+    msgbox(format("Norman: You two grunts, let me through!"))
+    waitmessage
+    msgbox(format("Grunt: No."))
+    waitmessage
+    msgbox(format("{PLAYER}, you wanna help me beat these grunts?"))
+    waitmessage
+    multi_fixed_2_vs_2(TRAINER_FLANNERY_4, IDonWannaLose, TRAINER_FLANNERY_5, ILost, TRAINER_NORMAN_3)
+    applymovement(12, WalkLeftFaceDown)
+    msgbox(format("Norman: Whew... That battle really took my party down, maybe I should get back to training. I'll need you to continue the climb to help Entei."))
+    waitmessage
+    setvar(VAR_ENTEI, 6)
+    releaseall
+}
+
+script IDonWannaLosea {
+    lockall
+    faceplayer
+    msgbox("I didn't wanna lose...")
+    waitmessage
+    releaseall
+}
+
+script ILosta {
+    lockall
+    faceplayer 
+    msgbox(format("I can't believe I lost. Why did you have to beat me?"))
+    waitmessage
+    releaseall
+}
+
+script NormanDialogueWMtChimney {
+    lockall
+    faceplayer
+    msgbox(format("Norman: I'm beat! You go on ahead."))
+    waitmessage
+    releaseall
+}
+
+script IWontMove {
+    lockall
+    msgbox(format("I. Won't. Move."))
+    releaseall
+}
+
+text IDonWannaLose {
+    "I don't wanna lose!"
+}
+
+text ILost {
+    "I lost..."
+}
+
+movement WalkLeftFaceDown {
+    walk_left
+    face_down
+}
+
+script CourtneyBattleWMtChimney {
+    lockall
+    msgbox(format("Courtney: YOU! YOU!!! YOU WILL NOT RUIN ME AGAIN!"))
+    trainerbattle_single(TRAINER_NORMAN_4, format("I SHALL PUMMEL YOU!"), format("It's over.. at least this part is..."), ScareEntei4)
+}
+
+script ScareEntei4 {
+    delay(30)
+    fadescreen(FADE_TO_BLACK)
+    removeobject(5)
+    playmoncry(SPECIES_ENTEI, CRY_MODE_ENCOUNTER)
+    fadescreen(FADE_FROM_BLACK)
+    msgbox(format("Courtney: I don't even care anymore. I don't get it, how did I lose? How did I fail? Why?"))
+    setvar(VAR_ENTEI, 7)
+    releaseall
+}
+
+script WMtChimneyGrunt1 {
+    trainerbattle_single(TRAINER_BRAWLY_5, "I'll stop you!", "I didn't stop you...")
+    msgbox(format("What was I doing again?"), MSGBOX_AUTOCLOSE)
+    waitmessage
+    end
+}
+
+script WMtChimneyGrunt2 {
+    trainerbattle_single(TRAINER_WATTSON_3, "I'll stop you!", "No wonder Entei flees...")
+    msgbox(format("Courtney's definitely not ahead of here..."), MSGBOX_AUTOCLOSE)
+    waitmessage
+    end
+}
+
+script WMtChimneyGrunt3 {
+    trainerbattle_single(TRAINER_WATTSON_4, "I'll stop you!", "Gollee you're stong!")
+    msgbox(format("What should I do for fun today? Oh right, I'm supposed to be mad at you. Grr."), MSGBOX_AUTOCLOSE)
+    waitmessage
+    end
+}
+
+script WMtChimneyGrunt4 {
+    trainerbattle_single(TRAINER_WATTSON_5, "I'll stop you!", "Or maybe I won't!")
+    msgbox(format("I think you might be strong enough to beat Courtney. Or maybe you aren't."), MSGBOX_AUTOCLOSE)
+    waitmessage
+    end
+}
+
+script WMtChimneyGrunt5 {
+    trainerbattle_single(TRAINER_FLANNERY_3, "I'll stop you!", "At least I'm not last...")
+    msgbox(format("Don't go up ahead, I'll get in trouble...Maybe."), MSGBOX_AUTOCLOSE)
+    waitmessage
+    end
+}
+
+script OopsWeLost {
+    lockall
+    msgbox("Oops, we lost!")
+    releaseall
+}
+
+script MaxiesAhead {
+    lockall
+    addobject(21)
+    applymovement(OBJ_EVENT_ID_PLAYER, Face_LEFT)
+    applymovement (21, AlinaHealsPlayer)
+    waitmovement(OBJ_EVENT_ID_PLAYER)
+    waitmovement(21)
+    msgbox(format("Alina: The leader of Team Magma, Maxie, lies ahead. I can't go with you, I'm under strict orders from Norman to help secure Entei. Good luck, I'll help you out a little"))
+    waitmessage
+    special(HealPlayerParty)
+    msgbox(format("There. I hope I helped a little."))
+    waitmessage
+    applymovement(21, AlinaWalksAwayMtChimney)
+    waitmovement(21)
+    removeobject(21)
+    setflag(FLAG_TEMP_3)
+    setvar(VAR_ENTEI, 8)
+    releaseall
+}
+
+movement AlinaWalksAwayMtChimney {
+    walk_fast_left *8
+}
+
+movement AlinaHealsPlayer {
+    walk_fast_right *5
+    walk_fast_down
+    walk_fast_right *5
+}
+
+script CourtneyLost {
+    lockall
+    faceplayer
+    msgbox(format("..."))
+    releaseall
+}
+
+script MoveGrunt {
+    lock
+    applymovement(12, MoveGrunta)
+    waitmovement(12)
+    release
+}
+
+movement MoveGrunta {
+    walk_fast_left
+    face_down
+}
